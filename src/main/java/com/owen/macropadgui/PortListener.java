@@ -18,14 +18,12 @@ public class PortListener implements SerialPortEventListener {
     private SerialPort port;
 
 
-
     public PortListener(SerialPort port) {
 
         this.port = port;
         knobMap = new HashMap<>();
         buttonMap = new HashMap<>();
         keyMap = new HashMap<>();
-
 
         JsonHandler jsonHandler = new JsonHandler(this);
 
@@ -34,6 +32,7 @@ public class PortListener implements SerialPortEventListener {
     public int convertCharToInteger(char c) {
         return Integer.parseInt(String.valueOf(c));
     }
+
     public void serialEvent(SerialPortEvent event) {
 
         try {

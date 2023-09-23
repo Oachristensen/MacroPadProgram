@@ -16,7 +16,6 @@ public class MacroKnob {
     private ArrayList<String> functionList;
 
 
-
     public MacroKnob(int knob) {
         knobNum = knob;
         functionList = new ArrayList<>();
@@ -31,7 +30,9 @@ public class MacroKnob {
 
         System.out.println("Knob Turned: " + knobNum + "    |   Knob Counter: " + counter + "   |   Function: " + functionList);
     }
+
     public void setKeyFunction(ArrayList<String> list) {
+
         this.functionList = list;
     }
 

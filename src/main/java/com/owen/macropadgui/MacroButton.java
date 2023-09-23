@@ -1,10 +1,15 @@
 package com.owen.macropadgui;
 
 
+import javafx.util.Pair;
+
 import java.awt.*;
 
 
+import java.awt.event.KeyEvent;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 /*
 Button:
@@ -17,10 +22,12 @@ public class MacroButton {
     public int buttonNum;
     public int counter = 0;
     private ArrayList<String> functionList;
+    private Map<Pair<Integer, Integer>, Integer> keyCodeMap;
 
     public MacroButton(int button) {
         buttonNum = button;
         functionList = new ArrayList<>();
+        keyCodeMap = new HashMap<>();
     }
 
     public void onAction(int type) {
@@ -34,19 +41,22 @@ public class MacroButton {
     public void onKeyPress() {
         try {
             Robot robot = new Robot();
+            //robot.keyPress();
 //            for (int i = 0; i < functionList.size(); i++) {
-//                robot.keyPress(functionList.get(i));
+//                robot.keyPress(Integer.parseInt(functionList.get(i)));
+//                System.out.println("Key press complete");
 //            }
 //            for (int i = 0; i < functionList.size(); i++) {
-//                robot.keyRelease(functionList.get(i));
+//                robot.keyRelease(Integer.parseInt(functionList.get(i)));
+//                System.out.println("Key Release complete");
+//
 //            }
-
 
 
             counter++;
-            System.out.println("Button num: " + buttonNum + " pressed.   |   Counter: " + counter + "   |   Function: " + functionList);
-        }
-        catch (Exception e) {
+            System.out.println("Button num: " + buttonNum + " pressed.   |   Counter: " + counter + "   |   Function: " + functionList + keyCodeMap);
+        } catch (Exception e) {
+            System.out.println("On Button key press error");
 
         }
     }
@@ -60,5 +70,10 @@ public class MacroButton {
     public void setKeyFunction(ArrayList<String> list) {
         this.functionList = list;
     }
+
+    public void setKeyCodeMap(Map<Pair<Integer, Integer>, Integer> recievedCodeMap) {
+        keyCodeMap = recievedCodeMap;
+    }
 }
+
 

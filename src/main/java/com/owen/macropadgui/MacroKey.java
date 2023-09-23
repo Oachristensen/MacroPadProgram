@@ -1,12 +1,24 @@
 package com.owen.macropadgui;
 
+import commands.MediaKeys;
+import javafx.util.Pair;
+
+import java.awt.*;
+
+import static java.awt.event.KeyEvent.*;
+
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 public class MacroKey {
     private int keyNum;
     private int keyRow;
 
-    private ArrayList<String> functionList;
+    private ArrayList<String> releaseFunctionList;
+    private ArrayList<String> pressFunctionList;
+    private Map<Pair<Integer, Integer>, Integer> keyPressCodeMap;
+    private Map<Pair<Integer, Integer>, Integer> keyReleaseCodeMap;
 
 
     /*
@@ -19,7 +31,11 @@ public class MacroKey {
     public MacroKey(int key, int row) {
         keyNum = key;
         keyRow = row;
-        functionList = new ArrayList<>();
+        int type;
+        releaseFunctionList = new ArrayList<>();
+        pressFunctionList = new ArrayList<>();
+        keyPressCodeMap = new HashMap<>();
+        keyReleaseCodeMap = new HashMap<>();
 
     }
 
@@ -33,14 +49,47 @@ public class MacroKey {
     }
 
     public void onKeyPress() {
-        System.out.println("Key in row: " + keyRow + " with key Num: " + keyNum + " Pressed |   Function: " + functionList);
+        try {
+
+            System.out.println("Key in row: " + keyRow + " with key Num: " + keyNum + " Pressed |   Function: " + keyPressCodeMap);
+            Robot robot = new Robot();
+            for (Pair<Integer, Integer> p : keyPressCodeMap.keySet()) {
+                if (p.getValue() != null) {
+                    robot.keyPress(VK_SHIFT);
+                }
+                if (p.getKey() > 0){
+                    robot.keyPress(p.getKey());
+                }
+                if (p.getValue() != null) {
+                    robot.keyRelease(VK_SHIFT);
+                }
+                if (p.getValue() != null && p.getValue() == MediaKeys.MEDIAKEY) {
+                    MediaKeys.sortMediaKeys(p.getKey()).run();
+                }
+            }
+            //robot.keyPress(KeyEvent.(keyCodeMap.get());
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     public void onKeyRelease() {
         System.out.println("Key in row: " + keyRow + " with key Num: " + keyNum + " Released");
     }
-    public void setKeyFunction(ArrayList<String> list) {
-        functionList = list;
+
+    public void setKeyPressFunction(ArrayList<String> list) {
+        pressFunctionList = list;
     }
+    public void setKeyReleaseFunction(ArrayList<String> list) {
+        releaseFunctionList = list;
+    }
+
+    public void setKeyPressCodeMap(Map<Pair<Integer, Integer>, Integer> recievedCodeMap) {
+        keyPressCodeMap = recievedCodeMap;
+    }
+    public void setKeyReleaseCodeMap(Map<Pair<Integer, Integer>, Integer> recievedCodeMap) {
+        keyPressCodeMap = recievedCodeMap;
+    }
+
 }
 
