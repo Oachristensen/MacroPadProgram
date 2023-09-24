@@ -67,14 +67,32 @@ public class MacroKey {
                     MediaKeys.sortMediaKeys(p.getKey()).run();
                 }
             }
-            //robot.keyPress(KeyEvent.(keyCodeMap.get());
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
 
     public void onKeyRelease() {
-        System.out.println("Key in row: " + keyRow + " with key Num: " + keyNum + " Released");
+        try {
+            System.out.println("Key in row: " + keyRow + " with key Num: " + keyNum + " Released");
+            Robot robot = new Robot();
+            for (Pair<Integer, Integer> p :  keyReleaseCodeMap.keySet()) {
+                if (p.getValue() != null) {
+                    robot.keyPress(VK_SHIFT);
+                }
+                if (p.getKey() > 0){
+                    robot.keyPress(p.getKey());
+                }
+                if (p.getValue() != null) {
+                    robot.keyRelease(VK_SHIFT);
+                }
+                if (p.getValue() != null && p.getValue() == MediaKeys.MEDIAKEY) {
+                    MediaKeys.sortMediaKeys(p.getKey()).run();
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     public void setKeyPressFunction(ArrayList<String> list) {
@@ -88,7 +106,7 @@ public class MacroKey {
         keyPressCodeMap = recievedCodeMap;
     }
     public void setKeyReleaseCodeMap(Map<Pair<Integer, Integer>, Integer> recievedCodeMap) {
-        keyPressCodeMap = recievedCodeMap;
+        keyReleaseCodeMap = recievedCodeMap;
     }
 
 }

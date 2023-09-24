@@ -43,43 +43,63 @@ public class JsonHandler {
                         int col = Integer.parseInt(splitKey[2]);
                         int inputType = Integer.parseInt(splitKey[3]);
                         Map<Pair<Integer, Integer>, Integer> recievedCodeMap = KeyPressHandler.convertStringToKeyCode(valueList);
-                        MacroKey tempKey = main.keyMap.get(o);
-                        //Big sleepy,  fix in morning
-//                        if (main.keyMap.get(new Pair<>(row, col)) != null) {
-//                            MacroKey macroKey = new MacroKey(row, col);
-//
-//                            if (inputType == 1) {
-//                                macroKey.setKeyPressFunction(valueList);
-//                                macroKey.setKeyPressCodeMap(recievedCodeMap);
-//                            } else if (inputType == 0) {
-//                                macroKey.setKeyReleaseFunction(valueList);
-//                                macroKey.setKeyReleaseCodeMap(recievedCodeMap);
-//                            }
-//                        }
-//
-//                        main.keyMap.put(new Pair<>(row, col), macroKey);
+                        MacroKey macroKey = new MacroKey(row, col);
+                        if (main.keyMap.get(new Pair<>(row, col)) != null) {
+                            macroKey = main.keyMap.get(new Pair<>(row, col));
+                        }
+
+                        if (inputType == 1) {
+                            macroKey.setKeyPressFunction(valueList);
+                            macroKey.setKeyPressCodeMap(recievedCodeMap);
+                        } else if (inputType == 0) {
+                            macroKey.setKeyReleaseFunction(valueList);
+                            macroKey.setKeyReleaseCodeMap(recievedCodeMap);
+                        }
+                        if (main.keyMap.get(new Pair<>(row, col)) == null) {
+                            main.keyMap.put(new Pair<>(row, col), macroKey);
+                        }
 
 
                     }
                     case "Button" -> {
                         int buttonNum = Integer.parseInt(splitKey[1]);
                         int inputType = Integer.parseInt(splitKey[2]);
-                        MacroButton macroButton = new MacroButton(buttonNum);
                         Map<Pair<Integer, Integer>, Integer> recievedCodeMap = KeyPressHandler.convertStringToKeyCode(valueList);
-                        macroButton.setKeyFunction(valueList);
-                        macroButton.setKeyCodeMap(recievedCodeMap);
+                        MacroButton macroButton = new MacroButton(buttonNum);
+                        if (main.buttonMap.get(buttonNum) != null) {
+                            macroButton = main.buttonMap.get(buttonNum);
+                        }
 
-                        main.buttonMap.put(buttonNum, macroButton);
-
-
+                        if (inputType == 1) {
+                            macroButton.setButtonPressFunction(valueList);
+                            macroButton.setButtonPressCodeMap(recievedCodeMap);
+                        } else if (inputType == 0) {
+                            macroButton.setButtonReleaseFunction(valueList);
+                            macroButton.setButtonReleaseCodeMap(recievedCodeMap);
+                        }
+                        if (main.buttonMap.get(buttonNum) == null) {
+                            main.buttonMap.put(buttonNum, macroButton);
+                        }
                     }
                     case "Knob" -> {
                         int knobNum = Integer.parseInt(splitKey[1]);
                         int inputType = Integer.parseInt(splitKey[2]);
+                        Map<Pair<Integer, Integer>, Integer> recievedCodeMap = KeyPressHandler.convertStringToKeyCode(valueList);
                         MacroKnob macroKnob = new MacroKnob(knobNum);
-                        macroKnob.setKeyFunction(valueList);
+                        if (main.knobMap.get(knobNum) != null) {
+                            macroKnob = main.knobMap.get(knobNum);
+                        }
 
-                        main.knobMap.put(knobNum, macroKnob);
+                        if (inputType == 1) {
+                            macroKnob.setKnobRightFunction(valueList);
+                            macroKnob.setKnobRightCodeMap(recievedCodeMap);
+                        } else if (inputType == 0) {
+                            macroKnob.setKnobLeftFunction(valueList);
+                            macroKnob.setKnobLeftCodeMap(recievedCodeMap);
+                        }
+                        if (main.knobMap.get(knobNum) == null) {
+                            main.knobMap.put(knobNum, macroKnob);
+                        }
 
                     }
                     default -> {

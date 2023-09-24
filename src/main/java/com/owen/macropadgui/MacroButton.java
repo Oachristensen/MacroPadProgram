@@ -1,6 +1,7 @@
 package com.owen.macropadgui;
 
 
+import commands.MediaKeys;
 import javafx.util.Pair;
 
 import java.awt.*;
@@ -10,6 +11,9 @@ import java.awt.event.KeyEvent;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
+
+import static java.awt.event.KeyEvent.VK_SHIFT;
+
 
 /*
 Button:
@@ -22,12 +26,14 @@ public class MacroButton {
     public int buttonNum;
     public int counter = 0;
     private ArrayList<String> functionList;
-    private Map<Pair<Integer, Integer>, Integer> keyCodeMap;
+    private Map<Pair<Integer, Integer>, Integer> buttonPressCodeMap;
+    private Map<Pair<Integer, Integer>, Integer> buttonReleaseCodeMap;
 
     public MacroButton(int button) {
         buttonNum = button;
         functionList = new ArrayList<>();
-        keyCodeMap = new HashMap<>();
+        buttonPressCodeMap = new HashMap<>();
+        buttonReleaseCodeMap = new HashMap<>();
     }
 
     public void onAction(int type) {
@@ -41,38 +47,63 @@ public class MacroButton {
     public void onKeyPress() {
         try {
             Robot robot = new Robot();
-            //robot.keyPress();
-//            for (int i = 0; i < functionList.size(); i++) {
-//                robot.keyPress(Integer.parseInt(functionList.get(i)));
-//                System.out.println("Key press complete");
-//            }
-//            for (int i = 0; i < functionList.size(); i++) {
-//                robot.keyRelease(Integer.parseInt(functionList.get(i)));
-//                System.out.println("Key Release complete");
-//
-//            }
-
-
-            counter++;
-            System.out.println("Button num: " + buttonNum + " pressed.   |   Counter: " + counter + "   |   Function: " + functionList + keyCodeMap);
+            for (Pair<Integer, Integer> p : buttonPressCodeMap.keySet()) {
+                if (p.getValue() != null) {
+                    robot.keyPress(VK_SHIFT);
+                }
+                if (p.getKey() > 0) {
+                    robot.keyPress(p.getKey());
+                }
+                if (p.getValue() != null) {
+                    robot.keyRelease(VK_SHIFT);
+                }
+                if (p.getValue() != null && p.getValue() == MediaKeys.MEDIAKEY) {
+                    MediaKeys.sortMediaKeys(p.getKey()).run();
+                }
+            }
         } catch (Exception e) {
-            System.out.println("On Button key press error");
-
+            e.printStackTrace();
         }
+
     }
 
     public void onKeyRelease() {
-
+        try {
+            Robot robot = new Robot();
+            for (Pair<Integer, Integer> p : buttonReleaseCodeMap.keySet()) {
+                if (p.getValue() != null) {
+                    robot.keyPress(VK_SHIFT);
+                }
+                if (p.getKey() > 0) {
+                    robot.keyPress(p.getKey());
+                }
+                if (p.getValue() != null) {
+                    robot.keyRelease(VK_SHIFT);
+                }
+                if (p.getValue() != null && p.getValue() == MediaKeys.MEDIAKEY) {
+                    MediaKeys.sortMediaKeys(p.getKey()).run();
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
 
     }
 
-
-    public void setKeyFunction(ArrayList<String> list) {
+    public void setButtonPressFunction(ArrayList<String> list) {
         this.functionList = list;
     }
 
-    public void setKeyCodeMap(Map<Pair<Integer, Integer>, Integer> recievedCodeMap) {
-        keyCodeMap = recievedCodeMap;
+    public void setButtonReleaseFunction(ArrayList<String> list) {
+        this.functionList = list;
+    }
+
+    public void setButtonReleaseCodeMap(Map<Pair<Integer, Integer>, Integer> recievedCodeMap) {
+        buttonReleaseCodeMap = recievedCodeMap;
+    }
+
+    public void setButtonPressCodeMap(Map<Pair<Integer, Integer>, Integer> recievedCodeMap) {
+        buttonPressCodeMap = recievedCodeMap;
     }
 }
 

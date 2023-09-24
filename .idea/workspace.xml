@@ -11,9 +11,6 @@
       <change beforePath="$PROJECT_DIR$/src/main/java/com/owen/macropadgui/MacroButton.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/owen/macropadgui/MacroButton.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/owen/macropadgui/MacroKey.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/owen/macropadgui/MacroKey.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/owen/macropadgui/MacroKnob.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/owen/macropadgui/MacroKnob.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/owen/macropadgui/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/owen/macropadgui/Main.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/owen/macropadgui/PortListener.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/owen/macropadgui/PortListener.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/owen/macropadgui/Sandbox.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/owen/macropadgui/Sandbox.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/storage/KeyMap.json" beforeDir="false" afterPath="$PROJECT_DIR$/storage/KeyMap.json" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
