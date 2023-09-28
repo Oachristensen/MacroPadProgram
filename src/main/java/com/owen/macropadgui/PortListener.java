@@ -44,9 +44,8 @@ public class PortListener implements SerialPortEventListener {
                 return;
             }
             char type = recievedString.charAt(0);
-
-
             int inputType = convertCharToInteger(recievedString.charAt(1));
+
             if (type == 'K') {
                 int keyRow = convertCharToInteger(recievedString.charAt(2)); // 0 top row 1 bot row
                 int keyCol = convertCharToInteger(recievedString.charAt(3)); // 0-3 right to left

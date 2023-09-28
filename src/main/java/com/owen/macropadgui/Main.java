@@ -1,6 +1,8 @@
 package com.owen.macropadgui;
 
 import javafx.application.Application;
+import javafx.fxml.*;
+import javafx.scene.*;
 import javafx.stage.Stage;
 import jssc.SerialPort;
 
@@ -11,14 +13,17 @@ public class Main extends Application {
 
     @Override
     public void start(Stage stage) throws IOException {
-//        FXMLLoader fxmlLoader = new FXMLLoader(HelloApplication.class.getResource("hello-view.fxml"));
-//        Scene scene = new Scene(fxmlLoader.load(), 320, 240);
-//        stage.setTitle("Hello!");
-//        stage.setScene(scene);
-//        stage.show();
 
 
         try {
+            Parent root = FXMLLoader.load(getClass().getResource("KeyMapSelection.fxml"));
+            Scene scene = new Scene(root);
+            stage.setScene(scene);
+            stage.show();
+
+
+
+
             SerialPort port = new SerialPort("COM3");
             port.openPort();
             port.setParams(SerialPort.BAUDRATE_9600, SerialPort.DATABITS_8, SerialPort.STOPBITS_1, SerialPort.PARITY_NONE);

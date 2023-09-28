@@ -3,6 +3,7 @@ package com.owen.macropadgui;
 import commands.MediaKeys;
 import javafx.util.Pair;
 
+import java.awt.event.KeyEvent;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;

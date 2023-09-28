@@ -25,6 +25,6 @@
   "Knob 0 0": "COMMA",
   "Knob 1 1": "QUESTION",
   "Knob 1 0": "QUESTION",
-  "Knob 2 1": "LEFT_PARENTHESIS",
-  "Knob 2 0": "RIGHT_PARENTHESIS"
+  "Knob 2 1": "a",
+  "Knob 2 0": "b"
 }
