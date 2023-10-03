@@ -12,12 +12,12 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-
 public class JsonHandler {
+//Get this from KeyMapSelectionHandler
+    public String keyMapNum = "";
 
-
-    public static final File STORAGE = new File(System.getProperty("user.dir") + "/storage/");
-    public static final File KEYMAP_PATH = new File(STORAGE, "KeyMap.json");
+    public final File STORAGE = new File(System.getProperty("user.dir") + "/storage/");
+    public final File KEYMAP_PATH = new File(STORAGE, "KeyMap" + keyMapNum + ".json");
 
 
     public JsonHandler(PortListener main) {
@@ -101,6 +101,9 @@ public class JsonHandler {
                             main.knobMap.put(knobNum, macroKnob);
                         }
 
+                    }
+                    case "Name" -> {
+                        // Change Keymap name to this
                     }
                     default -> {
 

@@ -71,13 +71,13 @@ public class KeyPressHandler {
                 case "TAB": keyCodeMap.put(new Pair<>(VK_TAB, null) ,i); break;
                 case "ENTER": keyCodeMap.put(new Pair<>(VK_ENTER, null) ,i); break;
                 case "OPEN_BRACKET": keyCodeMap.put(new Pair<>(VK_OPEN_BRACKET, null) ,i); break;
-                case "CLOSE_BRACKET": keyCodeMap.put(new Pair<>(VK_CLOSE_BRACKET, null) ,i); break;
+                case "]": keyCodeMap.put(new Pair<>(VK_CLOSE_BRACKET, null) ,i); break;
                 case "BACK_SLASH": keyCodeMap.put(new Pair<>(VK_BACK_SLASH, null) ,i); break;
                 case "OPEN_BRACE": keyCodeMap.put(new Pair<>(VK_OPEN_BRACKET, VK_SHIFT) ,i); break;
                 case "CLOSE_BRACE": keyCodeMap.put(new Pair<>(VK_CLOSE_BRACKET, VK_SHIFT) ,i); break;
                 case "LINE": keyCodeMap.put(new Pair<>(VK_BACK_SLASH, VK_SHIFT) ,i); break;
                 case "SEMICOLON": keyCodeMap.put(new Pair<>(VK_SEMICOLON, null) ,i); break;
-                case "COLON": keyCodeMap.put(new Pair<>(VK_COLON, null) ,i); break;
+                case ":": keyCodeMap.put(new Pair<>(VK_COLON, null) ,i); break;
                 case "QUOTE": keyCodeMap.put(new Pair<>(VK_QUOTE, null) ,i); break;
                 case "QUOTEDBL": keyCodeMap.put(new Pair<>(VK_QUOTEDBL, null) ,i); break;
                 case "COMMA": keyCodeMap.put(new Pair<>(VK_COMMA, null) ,i); break;

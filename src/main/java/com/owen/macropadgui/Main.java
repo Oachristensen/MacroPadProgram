@@ -11,17 +11,24 @@ import java.io.IOException;
 public class Main extends Application {
 
 
+    public boolean keyMapSelected = false;
+    String keyMapChoice;
+
     @Override
     public void start(Stage stage) throws IOException {
 
 
         try {
+            KeyMapNameJsonHandler keyMapNameJsonHandler = new KeyMapNameJsonHandler(this);
             Parent root = FXMLLoader.load(getClass().getResource("KeyMapSelection.fxml"));
             Scene scene = new Scene(root);
             stage.setScene(scene);
             stage.show();
-
-
+            while (!keyMapSelected) {
+                if (keyMapChoice != null) {
+                    keyMapSelected = true;
+                }
+            }
 
 
             SerialPort port = new SerialPort("COM3");

@@ -30,6 +30,8 @@ public class KeyMapSelectionController {
     private Scene scene;
     private Parent root;
 
+    private int keyMapChoice;
+
     public void checkIfKeyMapSelected(javafx.event.ActionEvent event) {
         if (keyMapList.getEditingIndex() != -1) {
             // Move to DeviceSelection with the selected Keymap
@@ -57,5 +59,11 @@ public class KeyMapSelectionController {
     }
     public void setKeyMapList(ArrayList<String> list) {
         keyMapList.getItems().addAll(list);
+    }
+    public void setKeyMapChoice(ActionEvent event) {
+        keyMapChoice = keyMapList.getEditingIndex();
+    }
+    public int getKeyMapChoice() {
+        return keyMapChoice;
     }
  }
