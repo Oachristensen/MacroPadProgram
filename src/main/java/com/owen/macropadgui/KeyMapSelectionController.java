@@ -18,9 +18,10 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
 
-public class KeyMapSelectionController {
+public class KeyMapSelectionController implements Initializable {
     @FXML
     private ListView<String> keyMapList;
+
     @FXML
     private Button selectButton;
     @FXML
@@ -29,6 +30,8 @@ public class KeyMapSelectionController {
     private Stage stage;
     private Scene scene;
     private Parent root;
+
+//    String[] list1 = {"A, B, C, D, E"};
 
     private int keyMapChoice;
 
@@ -57,13 +60,25 @@ public class KeyMapSelectionController {
             e.printStackTrace();
         }
     }
-    public void setKeyMapList(ArrayList<String> list) {
-        keyMapList.getItems().addAll(list);
-    }
+//    public void setKeyMapList(ArrayList<String> list) {
+//        keyMapList.getItems().addAll(list);
+//    }
     public void setKeyMapChoice(ActionEvent event) {
         keyMapChoice = keyMapList.getEditingIndex();
     }
     public int getKeyMapChoice() {
         return keyMapChoice;
     }
- }
+
+    @Override
+    public void initialize(URL url, ResourceBundle resourceBundle) {
+        KeyMapNameJsonHandler keyMapNameJsonHandler = new KeyMapNameJsonHandler();
+        ArrayList<String> list = new ArrayList(keyMapNameJsonHandler.getList());
+//        ArrayList<String> list = new ArrayList<>();
+//        list.add("A");
+//        list.add("B");
+//        String[] list1 = {"A, B, C, D, E"};
+        keyMapList.getItems().addAll(list);
+
+    }
+}

@@ -5,14 +5,11 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="d25fd3a0-72e2-4bc4-a929-5b1a8197db55" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/owen/macropadgui/KeyMapNameJsonHandler.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/storage/KeyMap2.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/owen/macropadgui/JsonHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/owen/macropadgui/JsonHandler.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/owen/macropadgui/KeyMapNameJsonHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/owen/macropadgui/KeyMapNameJsonHandler.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/owen/macropadgui/KeyMapSelectionController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/owen/macropadgui/KeyMapSelectionController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/owen/macropadgui/KeyPressHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/owen/macropadgui/KeyPressHandler.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/owen/macropadgui/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/owen/macropadgui/Main.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/storage/KeyMap.json" beforeDir="false" afterPath="$PROJECT_DIR$/storage/KeyMap.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/storage/KeyMapList.json" beforeDir="false" afterPath="$PROJECT_DIR$/storage/KeyMapList.json" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />

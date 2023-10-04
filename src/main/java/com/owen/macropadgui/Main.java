@@ -7,9 +7,9 @@ import javafx.stage.Stage;
 import jssc.SerialPort;
 
 import java.io.IOException;
+import java.util.ArrayList;
 
 public class Main extends Application {
-
 
     public boolean keyMapSelected = false;
     String keyMapChoice;
@@ -19,16 +19,10 @@ public class Main extends Application {
 
 
         try {
-            KeyMapNameJsonHandler keyMapNameJsonHandler = new KeyMapNameJsonHandler(this);
             Parent root = FXMLLoader.load(getClass().getResource("KeyMapSelection.fxml"));
             Scene scene = new Scene(root);
             stage.setScene(scene);
             stage.show();
-            while (!keyMapSelected) {
-                if (keyMapChoice != null) {
-                    keyMapSelected = true;
-                }
-            }
 
 
             SerialPort port = new SerialPort("COM3");
