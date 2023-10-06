@@ -10,10 +10,10 @@ import javafx.fxml.FXML;
 
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 
-// This doesnt work but I want to move on for now
 public class KeyMapNameJsonHandler {
 
 
@@ -22,9 +22,6 @@ public class KeyMapNameJsonHandler {
 
     private ArrayList<String> list = new ArrayList<>();
 
-    public KeyMapNameJsonHandler(){
-
-    }
     public KeyMapNameJsonHandler(KeyMapSelectionController keyMapSelectionController) {
         STORAGE.mkdir();
         try {
@@ -35,6 +32,8 @@ public class KeyMapNameJsonHandler {
                 list.add(name);
 
             }
+            //TODO Write better sort
+            Collections.sort(list);
         } catch (Exception e) {
             System.out.println(e);
         }

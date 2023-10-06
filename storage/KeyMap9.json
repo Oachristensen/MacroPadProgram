@@ -1,7 +1,7 @@
 {
   "Name": "Test Set 1",
-  "Key 0 0 1": "9 9",
-  "Key 0 0 0": "LEFT_ANGLE_BRACKET RIGHT_ANGLE_BRACKET",
+  "Key 0 0 1": "9 LEFT_PARENTHESIS",
+  "Key 0 0 0": "LEFT_ANGLE_BRACKET OPEN_BRACE",
   "Key 0 1 1": "c PLAY",
   "Key 0 1 0": "c PLAY",
   "Key 0 2 1": "e VOL_UP",

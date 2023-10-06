@@ -64,8 +64,8 @@ public class KeyPressHandler {
                 case "AMPERSAND": keyCodeMap.put(new Pair<>(VK_AMPERSAND, null) ,i); break;
                 case "ASTERISK": keyCodeMap.put(new Pair<>(VK_ASTERISK, null) ,i); break;
                 // It doesnt like these ones Idk why
-//                case "LEFT_PARENTHESIS": keyCodeMap.put(new Pair<>(VK_LEFT_PARENTHESIS, null) ,i); break;
-//                case "RIGHT_PARENTHESIS": keyCodeMap.put(new Pair<>(VK_RIGHT_PARENTHESIS, null) ,i); break;
+                case "LEFT_PARENTHESIS": keyCodeMap.put(new Pair<>(VK_9, VK_SHIFT) ,i); break;
+                case "RIGHT_PARENTHESIS": keyCodeMap.put(new Pair<>(VK_RIGHT_PARENTHESIS, null) ,i); break;
                 case "UNDERSCORE": keyCodeMap.put(new Pair<>(VK_UNDERSCORE, null) ,i); break;
                 case "PLUS": keyCodeMap.put(new Pair<>(VK_PLUS, null) ,i); break;
                 case "TAB": keyCodeMap.put(new Pair<>(VK_TAB, null) ,i); break;

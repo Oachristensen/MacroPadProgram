@@ -7,9 +7,9 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.shape.*;
 import javafx.stage.Stage;
-
 
 
 public class DeviceSelectionController {
@@ -62,16 +62,17 @@ public class DeviceSelectionController {
     private Scene scene;
     private Parent root;
 
+    private int keyMapChoice;
 
-    public void switchToKeymapSelection(ActionEvent event){
+
+    public void switchToKeymapSelection(ActionEvent event) {
         try {
             Parent root = FXMLLoader.load(getClass().getResource("KeyMapSelection.fxml"));
             stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
             scene = new Scene(root);
             stage.setScene(scene);
             stage.show();
-        }
-        catch (Exception e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
@@ -80,18 +81,19 @@ public class DeviceSelectionController {
         keyMapName.setText(name);
     }
 
-    public void switchToFunctionSelection(ActionEvent event) {
+    public void switchToFunctionSelection(MouseEvent event) {
+        GlobalData.getInstance().selectedItemID = (((Node) event.getSource()).getId());
         try {
+
             Parent root = FXMLLoader.load(getClass().getResource("FunctionSelection.fxml"));
-            stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-            scene = new Scene(root);
-            stage.setScene(scene);
-            stage.show();
-        }
-        catch (Exception e) {
+            Stage secondStage = new Stage();
+            secondStage.setResizable(false);
+            secondStage.setScene(new Scene(root));
+            secondStage.show();
+        } catch (Exception e) {
             e.printStackTrace();
         }
 
     }
-
 }
+

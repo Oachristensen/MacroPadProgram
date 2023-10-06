@@ -13,15 +13,13 @@ import java.util.List;
 import java.util.Map;
 
 public class JsonHandler {
-//Get this from KeyMapSelectionHandler
-    public String keyMapNum = "";
 
-    public final File STORAGE = new File(System.getProperty("user.dir") + "/storage/");
+    public static final File STORAGE = new File(System.getProperty("user.dir") + "/storage/");
 
 
-    public JsonHandler(PortListener main) {
+    public JsonHandler(PortListener main, int keyMapChoice) {
         STORAGE.mkdir();
-        File KEYMAP_PATH = new File(STORAGE, "KeyMap0" + ".json");
+        File KEYMAP_PATH = new File(STORAGE, "KeyMap" + keyMapChoice + ".json");
 
         try {
             final JSONObject data = (JSONObject) JSONValue.parse(new String(Files.readAllBytes(KEYMAP_PATH.toPath())));
@@ -119,6 +117,13 @@ public class JsonHandler {
         } catch (Exception e) {
             System.out.println(e);
         }
+
+    }
+    public static void putKeyData(String itemID, ArrayList<String> data, int keyMapChoice){
+        STORAGE.mkdir();
+        File KEYMAP_PATH = new File(STORAGE, "KeyMap" + keyMapChoice + ".json");
+        JSONObject keyMapFile =  new JSONObject();
+//        keyMapFile.put()
 
     }
 
