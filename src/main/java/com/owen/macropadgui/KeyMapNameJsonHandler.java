@@ -25,27 +25,22 @@ public class KeyMapNameJsonHandler {
     public KeyMapNameJsonHandler(){
 
     }
-    public KeyMapNameJsonHandler(Main main) {
-        KeyMapSelectionController keyMapSelectionController = new KeyMapSelectionController();
+    public KeyMapNameJsonHandler(KeyMapSelectionController keyMapSelectionController) {
         STORAGE.mkdir();
-        int i = 0;
         try {
             final JSONObject data = (JSONObject) JSONValue.parse(new String(Files.readAllBytes(KEYMAP_PATH.toPath())));
 
             for (Object o : data.keySet()) {
                 String name = data.get(o).toString();
-//                System.out.println(name);
                 list.add(name);
-//                System.out.println(list.get(i));
-//                i++;
 
             }
-//            keyMapSelectionController.setKeyMapList(list);
         } catch (Exception e) {
             System.out.println(e);
         }
     }
     public ArrayList<String> getList(){
+
         return list;
     }
 }

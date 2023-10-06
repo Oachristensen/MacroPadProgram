@@ -11,11 +11,11 @@ import java.util.ArrayList;
 
 public class Main extends Application {
 
-    public boolean keyMapSelected = false;
-    String keyMapChoice;
+
+
 
     @Override
-    public void start(Stage stage) throws IOException {
+    public void start(Stage stage){
 
 
         try {
@@ -24,7 +24,6 @@ public class Main extends Application {
             stage.setScene(scene);
             stage.show();
 
-
             SerialPort port = new SerialPort("COM3");
             port.openPort();
             port.setParams(SerialPort.BAUDRATE_9600, SerialPort.DATABITS_8, SerialPort.STOPBITS_1, SerialPort.PARITY_NONE);
@@ -32,6 +31,7 @@ public class Main extends Application {
             int mask = SerialPort.MASK_RXCHAR + SerialPort.MASK_CTS + SerialPort.MASK_DSR;
             port.setEventsMask(mask);
             port.addEventListener(new PortListener(port));
+
 
         } catch (Exception e) {
             e.printStackTrace();

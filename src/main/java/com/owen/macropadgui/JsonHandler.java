@@ -17,11 +17,11 @@ public class JsonHandler {
     public String keyMapNum = "";
 
     public final File STORAGE = new File(System.getProperty("user.dir") + "/storage/");
-    public final File KEYMAP_PATH = new File(STORAGE, "KeyMap" + keyMapNum + ".json");
 
 
     public JsonHandler(PortListener main) {
         STORAGE.mkdir();
+        File KEYMAP_PATH = new File(STORAGE, "KeyMap0" + ".json");
 
         try {
             final JSONObject data = (JSONObject) JSONValue.parse(new String(Files.readAllBytes(KEYMAP_PATH.toPath())));

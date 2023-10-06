@@ -14,14 +14,9 @@
          </font>
       </Label>
       <ListView fx:id="keyMapList" layoutX="137.0" layoutY="199.0" prefHeight="370.0" prefWidth="200.0" />
-      <Button fx:id="selectButton" layoutX="166.0" layoutY="594.0" mnemonicParsing="false" onAction="#checkIfKeyMapSelected" prefHeight="39.0" prefWidth="143.0" text="Select">
+      <Button fx:id="selectButton" layoutX="145.0" layoutY="634.0" mnemonicParsing="false" onAction="#checkIfKeyMapSelected" prefHeight="63.0" prefWidth="184.0" text="Select">
          <font>
             <Font size="18.0" />
-         </font>
-      </Button>
-      <Button fx:id="createButton" layoutX="166.0" layoutY="661.0" mnemonicParsing="false" onAction="#switchToDeviceSelection" text="Create New">
-         <font>
-            <Font size="22.0" />
          </font>
       </Button>
    </children>

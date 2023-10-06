@@ -18,15 +18,17 @@ public class PortListener implements SerialPortEventListener {
     private SerialPort port;
 
 
-    public PortListener(SerialPort port) {
 
-        this.port = port;
+    public PortListener(SerialPort port) {
         knobMap = new HashMap<>();
         buttonMap = new HashMap<>();
         keyMap = new HashMap<>();
-
+        this.port = port;
         JsonHandler jsonHandler = new JsonHandler(this);
+    }
+    public PortListener(KeyMapSelectionController keyMapSelectionController){
 
+        System.out.println(keyMapSelectionController.getKeyMapChoice());
     }
 
     public int convertCharToInteger(char c) {
