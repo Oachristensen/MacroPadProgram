@@ -17,6 +17,7 @@ import jssc.SerialPort;
 
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.EventListener;
 import java.util.ResourceBundle;
 
 public class KeyMapSelectionController implements Initializable {
@@ -63,7 +64,6 @@ public class KeyMapSelectionController implements Initializable {
             scene = new Scene(root);
             stage.setScene(scene);
             stage.show();
-
             if (!port.isOpened()) {
                 port.openPort();
                 port.setParams(SerialPort.BAUDRATE_9600, SerialPort.DATABITS_8, SerialPort.STOPBITS_1, SerialPort.PARITY_NONE);
@@ -86,6 +86,7 @@ public class KeyMapSelectionController implements Initializable {
             @Override
             public void changed(ObservableValue<? extends String> observableValue, String s, String t1) {
                 GlobalData.getInstance().selectedKeyMap = keyMapList.getSelectionModel().getSelectedIndex();
+                System.out.println(GlobalData.getInstance().selectedKeyMap);
             }
 
         });

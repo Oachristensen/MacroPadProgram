@@ -10,6 +10,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.control.*;
 import javafx.stage.Stage;
+import org.json.simple.JSONObject;
 
 import java.net.URL;
 import java.util.ArrayList;
@@ -59,6 +60,8 @@ public class FunctionSelectionController implements Initializable {
     private HashMap<Integer, TreeView<String>> functionTreeViewList;
     private HashMap<Integer, Integer> functionTreeViewIndexList;
 
+    private static JSONObject keyMapFile = new JSONObject();
+
 
     private String[] populateArray() {
         String[] newArray = new String[5];
@@ -66,13 +69,13 @@ public class FunctionSelectionController implements Initializable {
             if (!keyTextFieldList.get(i).getText().isBlank()) {
                 newArray[i] = (keyTextFieldList.get(i).getText());
             }
-            else if (functionTreeViewList.get(i).getSelectionModel().getSelectedItem() != null) {
-                newArray[i] = (functionTreeViewList.get(i).getSelectionModel().getSelectedItem().toString());
-                functionTreeViewIndexList.put(i, functionTreeViewList.get(i).getSelectionModel().getSelectedIndex());
-            }
-            else if (keyTextFieldList.get(i).getText().isBlank() && functionTreeViewList.get(i).getSelectionModel().getSelectedItem() == null) {
-                newArray[i] = (" ");
-            }
+//            else if (functionTreeViewList.get(i).getSelectionModel().getSelectedItem() != null) {
+//                newArray[i] = (functionTreeViewList.get(i).getSelectionModel().getSelectedItem().toString());
+//                functionTreeViewIndexList.put(i, functionTreeViewList.get(i).getSelectionModel().getSelectedIndex());
+//            }
+//            else if (keyTextFieldList.get(i).getText().isBlank() && functionTreeViewList.get(i).getSelectionModel().getSelectedItem() == null) {
+//                newArray[i] = (" ");
+//            }
 
         }
         return newArray;
@@ -80,13 +83,16 @@ public class FunctionSelectionController implements Initializable {
 
     private void clearSelection() {
         for (Integer i : keyTextFieldList.keySet()) {
-        keyTextFieldList.get(i).setText("");
-        functionTreeViewList.get(i).setSelectionModel(null);
+            System.out.println(keyTextFieldList.get(i).getText());
+            keyTextFieldList.get(i).setText(" ");
+//        functionTreeViewList.get(i).setSelectionModel(null);
+        }
     }
-    }
+
     private void setSelection(String[] array) {
-            for (Integer i : keyTextFieldList.keySet()) {
-                keyTextFieldList.get(i).setText(array[i]);
+        for (Integer i : keyTextFieldList.keySet()) {
+            System.out.println(keyTextFieldList.get(i).getText());
+            keyTextFieldList.get(i).setText(array[i]);
 //                functionTreeViewList.get(i).getSelectionModel().select(functionTreeViewIndexList.get(i));
 
         }
@@ -98,15 +104,107 @@ public class FunctionSelectionController implements Initializable {
         stage.close();
     }
 
-    public void getKeyData() {
+    public static String sortItemID(String itemID) {
+        String deviceType = "";
+        String deviceNum = "";
+
+        char[] itemIdCharArray = itemID.toCharArray();
+        switch (itemIdCharArray[1]) {
+            case 'e':
+                deviceType = "Key";
+                switch (itemIdCharArray[3]) {
+                    case '1':
+                        deviceNum = " 0 0";
+                        break;
+                    case '2':
+                        deviceNum = " 0 1";
+                        break;
+                    case '3':
+                        deviceNum = " 0 2";
+                        break;
+                    case '4':
+                        deviceNum = " 0 3";
+                        break;
+                    case '5':
+                        deviceNum = " 1 0";
+                        break;
+                    case '6':
+                        deviceNum = " 1 1";
+                        break;
+                    case '7':
+                        deviceNum = " 1 2";
+                        break;
+                    case '8':
+                        deviceNum = " 1 3";
+                        break;
+                    default:
+                        System.out.println("Something wrong with KeyID");
+                }
+                break;
+            case 'u':
+                deviceType = "Button";
+                switch (itemIdCharArray[6]) {
+                    case '1':
+                        deviceNum = " 0";
+                        break;
+                    case '2':
+                        deviceNum = " 1";
+                        break;
+                    case '3':
+                        deviceNum = " 2";
+                        break;
+                    default:
+                        System.out.println("Something wrong with ButtonID");
+                }
+                break;
+            case 'n':
+                deviceType = "Knob";
+                switch (itemIdCharArray[4]) {
+                    case '1':
+                        deviceNum = " 0";
+                        break;
+                    case '2':
+                        deviceNum = " 1";
+                        break;
+                    case '3':
+                        deviceNum = " 2";
+                        break;
+                    default:
+                        System.out.println("Something wrong with KnobID");
+                }
+                break;
+            default:
+                System.out.println("Something wrong with ItemID");
+        }
+        return (deviceType + deviceNum);
+    }
+
+    public static String arrayToString(String[] data) {
+        return (data[0] + " " + data[1] + " " + data[2] + " " + data[3] + " " + data[4]);
+    }
+
+    public void setFunctionData(String[] data, String inputType) {
         int keyMapID = GlobalData.getInstance().selectedKeyMap;
         String itemID = GlobalData.getInstance().selectedItemID;
-//        ArrayList<String> inputList = populateArray();
-//        //TODO This is not how this function should work
-//        JsonHandler.putKeyData(itemID, inputList, keyMapID);
+        String sortedItemID = sortItemID(itemID);
+        String key = (sortedItemID + " " + inputType);
+        String value = arrayToString(data);
+        System.out.println(key + value);
+        keyMapFile.put(key, value);
     }
-    public void emptyStringArray(String[] array){
-        Arrays.fill(array, (""));
+    public static JSONObject getKeyMapFile(){
+        return keyMapFile;
+    }
+
+    public void uploadFunctionData(ActionEvent event) {
+        // 0 for release 1 for press
+        Arrays.fill(releaseArray, (""));
+        releaseArray = populateArray();
+        Arrays.fill(pressArray, (""));
+        pressArray = populateArray();
+        setFunctionData(releaseArray, "0");
+        setFunctionData(pressArray, "1");
+        exitFunctionSelection(event);
     }
 
 
@@ -134,15 +232,15 @@ public class FunctionSelectionController implements Initializable {
             public void changed(ObservableValue<? extends Boolean> observableValue, Boolean aBoolean, Boolean isSelected) {
                 if (isSelected == false) {
 
-                    Arrays.fill(pressArray, (""));
-                    pressArray = populateArray();
+                    Arrays.fill(releaseArray, (""));
+                    releaseArray = populateArray();
                     clearSelection();
                     setSelection(pressArray);
                     pressReleaseToggleButton.setText("PRESS");
 
                 } else {
-                    Arrays.fill(releaseArray, (""));
-                    releaseArray = populateArray();
+                    Arrays.fill(pressArray, (""));
+                    pressArray = populateArray();
                     clearSelection();
                     setSelection(releaseArray);
                     pressReleaseToggleButton.setText("RELEASE");

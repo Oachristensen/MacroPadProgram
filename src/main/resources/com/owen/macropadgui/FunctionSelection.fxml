@@ -59,7 +59,7 @@
             <Font size="26.0" />
          </font>
       </Button>
-      <Button fx:id="saveButton" layoutX="741.0" layoutY="16.0" mnemonicParsing="false" text="SAVE">
+      <Button fx:id="saveButton" layoutX="741.0" layoutY="16.0" mnemonicParsing="false" onAction="#uploadFunctionData" text="SAVE">
          <font>
             <Font size="26.0" />
          </font>

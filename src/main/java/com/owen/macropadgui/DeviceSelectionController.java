@@ -10,6 +10,9 @@ import javafx.scene.control.*;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.shape.*;
 import javafx.stage.Stage;
+import org.json.simple.JSONObject;
+
+import java.util.ArrayList;
 
 
 public class DeviceSelectionController {
@@ -94,6 +97,12 @@ public class DeviceSelectionController {
             e.printStackTrace();
         }
 
+    }
+
+    public void uploadData(ActionEvent event) {
+
+        JSONObject keyMapFile = FunctionSelectionController.getKeyMapFile();
+        JsonHandler.uploadKeyData(keyMapFile);
     }
 }
 

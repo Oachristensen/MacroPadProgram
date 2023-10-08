@@ -7,8 +7,10 @@ import org.json.simple.JSONValue;
 
 import javax.crypto.Mac;
 import java.io.File;
+import java.io.FileWriter;
 import java.nio.file.Files;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 
@@ -17,12 +19,12 @@ public class JsonHandler {
     public static final File STORAGE = new File(System.getProperty("user.dir") + "/storage/");
 
 
-    public JsonHandler(PortListener main, int keyMapChoice) {
+    public JsonHandler(PortListener main) {
         STORAGE.mkdir();
-        File KEYMAP_PATH = new File(STORAGE, "KeyMap" + keyMapChoice + ".json");
+        File KEYMAP_PATH = new File(STORAGE, "KeyMap" + GlobalData.getInstance().selectedKeyMap + ".json");
 
         try {
-            final JSONObject data = (JSONObject) JSONValue.parse(new String(Files.readAllBytes(KEYMAP_PATH.toPath())));
+            JSONObject data = (JSONObject) JSONValue.parse(new String(Files.readAllBytes(KEYMAP_PATH.toPath())));
 
             for (Object o : data.keySet()) {
                 String key = (String) o;
@@ -33,7 +35,6 @@ public class JsonHandler {
                 String[] splitKey = key.split(" ");
 
                 ArrayList<String> valueList = new ArrayList<>(List.of(value.split(" ")));
-
 
                 switch (splitKey[0]) {
                     case "Key" -> {
@@ -119,12 +120,17 @@ public class JsonHandler {
         }
 
     }
-    public static void putKeyData(String itemID, ArrayList<String> data, int keyMapChoice){
-        STORAGE.mkdir();
-        File KEYMAP_PATH = new File(STORAGE, "KeyMap" + keyMapChoice + ".json");
-        JSONObject keyMapFile =  new JSONObject();
-//        keyMapFile.put()
 
+    public static void uploadKeyData(JSONObject keyMapFile) {
+        try {
+            int keyMapChoice = GlobalData.getInstance().selectedKeyMap;
+            File KEYMAP_PATH = new File(STORAGE, "KeyMap" + keyMapChoice + ".json");
+            FileWriter file = new FileWriter(KEYMAP_PATH);
+            file.write(keyMapFile.toJSONString());
+            file.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
 

@@ -6,7 +6,6 @@ import jssc.SerialPortEvent;
 import jssc.SerialPortEventListener;
 import jssc.SerialPortException;
 
-import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -18,14 +17,12 @@ public class PortListener implements SerialPortEventListener {
     private SerialPort port;
 
 
-
-    public PortListener(SerialPort port, KeyMapSelectionController keyMapSelectionController) {
+    public PortListener(SerialPort port, KeyMapSelectionController keyMapSelectionController){
+        this.port = port;
         knobMap = new HashMap<>();
         buttonMap = new HashMap<>();
         keyMap = new HashMap<>();
-        this.port = port;
-        int keyMapChoice = GlobalData.getInstance().selectedKeyMap;
-        JsonHandler jsonHandler = new JsonHandler(this, keyMapChoice);
+        JsonHandler jsonHandler = new JsonHandler(this);
     }
 
     public int convertCharToInteger(char c) {
