@@ -41,25 +41,18 @@ public class DeviceSelectionController {
     private Rectangle key8;
 
     @FXML
-    private Circle knob1;
+    private Circle button1;
     @FXML
-    private Circle knob2;
+    private Circle button2;
     @FXML
-    private Circle knob3;
+    private Circle button3;
 
     @FXML
-    private Button knob1Left;
+    private Button knob1;
     @FXML
-    private Button knob2Left;
+    private Button knob2;
     @FXML
-    private Button knob3Left;
-
-    @FXML
-    private Button knob1Right;
-    @FXML
-    private Button knob2Right;
-    @FXML
-    private Button knob3Right;
+    private Button knob3;
 
     private Stage stage;
     private Scene scene;
@@ -97,12 +90,6 @@ public class DeviceSelectionController {
             e.printStackTrace();
         }
 
-    }
-
-    public void uploadData(ActionEvent event) {
-
-        JSONObject keyMapFile = FunctionSelectionController.getKeyMapFile();
-        JsonHandler.uploadKeyData(keyMapFile);
     }
 }
 

@@ -13,7 +13,6 @@ public class Main extends Application {
 
 /*TODO
 Bugs: cannot switch keymap
-Need to store Json values so they dont overwrite
 
     */
 

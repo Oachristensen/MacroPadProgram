@@ -1,7 +1,6 @@
 package com.owen.macropadgui;
 
 
-import com.almasb.fxgl.core.collection.Array;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
@@ -11,9 +10,10 @@ import javafx.scene.Node;
 import javafx.scene.control.*;
 import javafx.stage.Stage;
 import org.json.simple.JSONObject;
+import org.json.simple.JSONValue;
 
 import java.net.URL;
-import java.util.ArrayList;
+import java.nio.file.Files;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.ResourceBundle;
@@ -60,32 +60,65 @@ public class FunctionSelectionController implements Initializable {
     private HashMap<Integer, TreeView<String>> functionTreeViewList;
     private HashMap<Integer, Integer> functionTreeViewIndexList;
 
-    private static JSONObject keyMapFile = new JSONObject();
-
 
     private String[] populateArray() {
         String[] newArray = new String[5];
         for (Integer i : keyTextFieldList.keySet()) {
-            if (!keyTextFieldList.get(i).getText().isBlank()) {
+            if (!keyTextFieldList.get(i).getText().isBlank() || !(keyTextFieldList.get(i).getText() == null)) {
                 newArray[i] = (keyTextFieldList.get(i).getText());
+            } else if (functionTreeViewList.get(i).getSelectionModel().getSelectedItem() != null) {
+                newArray[i] = (functionTreeViewList.get(i).getSelectionModel().getSelectedItem().toString());
+                functionTreeViewIndexList.put(i, functionTreeViewList.get(i).getSelectionModel().getSelectedIndex());
+            } else if (keyTextFieldList.get(i).getText().isBlank() && functionTreeViewList.get(i).getSelectionModel().getSelectedItem() == null) {
+                newArray[i] = (" ");
             }
-//            else if (functionTreeViewList.get(i).getSelectionModel().getSelectedItem() != null) {
-//                newArray[i] = (functionTreeViewList.get(i).getSelectionModel().getSelectedItem().toString());
-//                functionTreeViewIndexList.put(i, functionTreeViewList.get(i).getSelectionModel().getSelectedIndex());
-//            }
-//            else if (keyTextFieldList.get(i).getText().isBlank() && functionTreeViewList.get(i).getSelectionModel().getSelectedItem() == null) {
-//                newArray[i] = (" ");
-//            }
 
         }
         return newArray;
+    }
+
+    private void populateTreeView() {
+        TreeItem<String> topRoot = new TreeItem<String>("Special Keys");
+        topRoot.setExpanded(true);
+        TreeItem<String> rootFKeys = new TreeItem<String>("F Keys");
+        rootFKeys.setExpanded(false);
+        for (int i = 1; i < 13; i++) {
+            TreeItem<String> fnKey = new TreeItem<>("F" + i);
+            rootFKeys.getChildren().add(fnKey);
+        }
+        TreeItem<String> rootSpecialKeys = new TreeItem<String>("Function Keys");
+        rootFKeys.setExpanded(false);
+        rootSpecialKeys.getChildren().addAll(
+                new TreeItem<String>("Space"),
+                new TreeItem<String>("Enter"),
+                new TreeItem<String>("Backspace"),
+                new TreeItem<String>("Tab"),
+                new TreeItem<String>("Alt"),
+                new TreeItem<String>("Ctrl"),
+                new TreeItem<String>("Windows"),
+                new TreeItem<String>("Esc"),
+                new TreeItem<String>("Caps")
+        );
+        TreeItem<String> rootArrowKeys = new TreeItem<String>("Arrow Keys");
+        rootArrowKeys.getChildren().addAll(
+                new TreeItem<>("Up"),
+                new TreeItem<>("Down"),
+                new TreeItem<>("Left"),
+                new TreeItem<>("Right")
+        );
+        topRoot.getChildren().addAll(rootFKeys, rootSpecialKeys, rootArrowKeys);
+
+        for (Integer i : functionTreeViewList.keySet()) {
+            functionTreeViewList.get(i).setRoot(topRoot);
+        }
+
     }
 
     private void clearSelection() {
         for (Integer i : keyTextFieldList.keySet()) {
             System.out.println(keyTextFieldList.get(i).getText());
             keyTextFieldList.get(i).setText(" ");
-//        functionTreeViewList.get(i).setSelectionModel(null);
+            functionTreeViewList.get(i).getSelectionModel().select(null);
         }
     }
 
@@ -93,8 +126,18 @@ public class FunctionSelectionController implements Initializable {
         for (Integer i : keyTextFieldList.keySet()) {
             System.out.println(keyTextFieldList.get(i).getText());
             keyTextFieldList.get(i).setText(array[i]);
-//                functionTreeViewList.get(i).getSelectionModel().select(functionTreeViewIndexList.get(i));
+            if (functionTreeViewList.get(i) != null || functionTreeViewIndexList.get(i) != null) {
+                functionTreeViewList.get(i).getSelectionModel().select(functionTreeViewIndexList.get(i));
+            }
+        }
+    }
 
+    private void setTreeIndex() {
+        for (Integer i : keyTextFieldList.keySet()) {
+            TreeItem<String> selectedItem = functionTreeViewList.get(i).getSelectionModel().getSelectedItem();
+            if (selectedItem != null) {
+                functionTreeViewIndexList.put(i, selectedItem.getParent().getChildren().indexOf(selectedItem));
+            }
         }
     }
 
@@ -102,6 +145,10 @@ public class FunctionSelectionController implements Initializable {
     public void exitFunctionSelection(ActionEvent event) {
         stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
         stage.close();
+    }
+
+    public static String arrayToSortedString(String[] data) {
+        return (data[0] + " " + data[1] + " " + data[2] + " " + data[3] + " " + data[4]);
     }
 
     public static String sortItemID(String itemID) {
@@ -179,21 +226,13 @@ public class FunctionSelectionController implements Initializable {
         return (deviceType + deviceNum);
     }
 
-    public static String arrayToString(String[] data) {
-        return (data[0] + " " + data[1] + " " + data[2] + " " + data[3] + " " + data[4]);
-    }
 
     public void setFunctionData(String[] data, String inputType) {
-        int keyMapID = GlobalData.getInstance().selectedKeyMap;
         String itemID = GlobalData.getInstance().selectedItemID;
         String sortedItemID = sortItemID(itemID);
         String key = (sortedItemID + " " + inputType);
-        String value = arrayToString(data);
-        System.out.println(key + value);
-        keyMapFile.put(key, value);
-    }
-    public static JSONObject getKeyMapFile(){
-        return keyMapFile;
+        String value = arrayToSortedString(data);
+        JsonHandler.uploadKeyData(key, value);
     }
 
     public void uploadFunctionData(ActionEvent event) {
@@ -226,25 +265,57 @@ public class FunctionSelectionController implements Initializable {
         functionTreeViewList.put(3, functionList4);
         functionTreeViewList.put(4, functionList5);
 
+        functionTreeViewIndexList.put(0, 1);
+        functionTreeViewIndexList.put(1, 2);
+        functionTreeViewIndexList.put(2, 3);
+        functionTreeViewIndexList.put(3, 4);
+        functionTreeViewIndexList.put(4, 5);
+
+        populateTreeView();
+        if (GlobalData.getInstance().selectedItemID.toCharArray()[1] == 'n') {
+            pressReleaseToggleButton.setText("LEFT");
+        }
+
 
         pressReleaseToggleButton.selectedProperty().addListener(new ChangeListener<Boolean>() {
             @Override
             public void changed(ObservableValue<? extends Boolean> observableValue, Boolean aBoolean, Boolean isSelected) {
-                if (isSelected == false) {
+                if (GlobalData.getInstance().selectedItemID.toCharArray()[1] == 'n') {
+                    if (isSelected == false) {
 
-                    Arrays.fill(releaseArray, (""));
-                    releaseArray = populateArray();
-                    clearSelection();
-                    setSelection(pressArray);
-                    pressReleaseToggleButton.setText("PRESS");
+                        Arrays.fill(releaseArray, (""));
+                        releaseArray = populateArray();
+                        setTreeIndex();
+                        clearSelection();
+                        setSelection(pressArray);
+                        pressReleaseToggleButton.setText("LEFT");
 
+                    } else {
+                        Arrays.fill(pressArray, (""));
+                        pressArray = populateArray();
+                        setTreeIndex();
+                        clearSelection();
+                        setSelection(releaseArray);
+                        pressReleaseToggleButton.setText("RIGHT");
+
+                    }
                 } else {
-                    Arrays.fill(pressArray, (""));
-                    pressArray = populateArray();
-                    clearSelection();
-                    setSelection(releaseArray);
-                    pressReleaseToggleButton.setText("RELEASE");
+                    if (isSelected == false) {
 
+                        Arrays.fill(releaseArray, (""));
+                        releaseArray = populateArray();
+                        clearSelection();
+                        setSelection(pressArray);
+                        pressReleaseToggleButton.setText("PRESS");
+
+                    } else {
+                        Arrays.fill(pressArray, (""));
+                        pressArray = populateArray();
+                        clearSelection();
+                        setSelection(releaseArray);
+                        pressReleaseToggleButton.setText("RELEASE");
+
+                    }
                 }
             }
         });

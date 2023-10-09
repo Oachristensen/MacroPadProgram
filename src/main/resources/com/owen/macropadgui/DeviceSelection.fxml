@@ -11,16 +11,16 @@
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="768.0" prefWidth="1376.0" style="-fx-background-color: gray;" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.owen.macropadgui.DeviceSelectionController">
    <children>
-      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#6d7a86" height="550.0" layoutX="138.0" layoutY="134.0" stroke="BLACK" strokeType="INSIDE" width="1100.0" />
-      <Button fx:id="uploadButton" layoutX="1202.0" layoutY="41.0" mnemonicParsing="false" onAction="#uploadData" text="Upload">
+      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#6d7a86" height="550.0" layoutX="144.0" layoutY="134.0" stroke="BLACK" strokeType="INSIDE" width="1100.0" />
+      <Button fx:id="uploadButton" layoutX="1202.0" layoutY="41.0" mnemonicParsing="false" text="Upload">
          <font>
             <Font size="22.0" />
          </font>
       </Button>
       <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#c62e2e" height="93.0" layoutX="217.0" layoutY="200.0" stroke="BLACK" strokeType="INSIDE" width="217.0" />
-      <Circle fx:id="knob1" fill="WHITE" layoutX="597.0" layoutY="217.0" onMouseClicked="#switchToFunctionSelection" radius="68.0" stroke="BLACK" strokeType="INSIDE" />
-      <Circle fx:id="knob2" fill="WHITE" layoutX="817.0" layoutY="217.0" onMouseClicked="#switchToFunctionSelection" radius="68.0" stroke="BLACK" strokeType="INSIDE" />
-      <Circle fx:id="knob3" fill="WHITE" layoutX="1047.0" layoutY="217.0" onMouseClicked="#switchToFunctionSelection" radius="68.0" stroke="BLACK" strokeType="INSIDE" />
+      <Circle fx:id="button1" fill="WHITE" layoutX="597.0" layoutY="217.0" onMouseClicked="#switchToFunctionSelection" radius="68.0" stroke="BLACK" strokeType="INSIDE" />
+      <Circle fx:id="button2" fill="WHITE" layoutX="817.0" layoutY="217.0" onMouseClicked="#switchToFunctionSelection" radius="68.0" stroke="BLACK" strokeType="INSIDE" />
+      <Circle fx:id="button3" fill="WHITE" layoutX="1047.0" layoutY="217.0" onMouseClicked="#switchToFunctionSelection" radius="68.0" stroke="BLACK" strokeType="INSIDE" />
       <Rectangle fx:id="key1" arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="130.0" layoutX="298.0" layoutY="344.0" onMouseClicked="#switchToFunctionSelection" stroke="BLACK" strokeType="INSIDE" width="136.0" />
       <Rectangle fx:id="key2" arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="130.0" layoutX="529.0" layoutY="344.0" onMouseClicked="#switchToFunctionSelection" stroke="BLACK" strokeType="INSIDE" width="136.0" />
       <Rectangle fx:id="key3" arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="130.0" layoutX="749.0" layoutY="344.0" onMouseClicked="#switchToFunctionSelection" stroke="BLACK" strokeType="INSIDE" width="136.0" />
@@ -39,12 +39,9 @@
             <Font size="32.0" />
          </font>
       </TextField>
-      <Button fx:id="knob1Right" layoutX="620.0" layoutY="303.0" mnemonicParsing="false" onMouseClicked="#switchToFunctionSelection" text="Right" />
-      <Button fx:id="knob1Left" layoutX="526.0" layoutY="303.0" mnemonicParsing="false" onMouseClicked="#switchToFunctionSelection" prefHeight="25.0" prefWidth="45.0" text="Left" />
-      <Button fx:id="knob2Left" layoutX="749.0" layoutY="303.0" mnemonicParsing="false" onMouseClicked="#switchToFunctionSelection" prefHeight="25.0" prefWidth="45.0" text="Left" />
-      <Button fx:id="knob2Right" layoutX="840.0" layoutY="303.0" mnemonicParsing="false" onMouseClicked="#switchToFunctionSelection" prefHeight="25.0" prefWidth="45.0" text="Right" />
-      <Button fx:id="knob3Left" layoutX="979.0" layoutY="303.0" mnemonicParsing="false" onMouseClicked="#switchToFunctionSelection" prefHeight="25.0" prefWidth="45.0" text="Left" />
-      <Button fx:id="knob3Right" layoutX="1070.0" layoutY="303.0" mnemonicParsing="false" onMouseClicked="#switchToFunctionSelection" text="Right" />
+      <Button fx:id="knob1" layoutX="575.0" layoutY="303.0" mnemonicParsing="false" onMouseClicked="#switchToFunctionSelection" text="Knob" />
+      <Button fx:id="knob2" layoutX="795.0" layoutY="303.0" mnemonicParsing="false" onMouseClicked="#switchToFunctionSelection" prefHeight="25.0" prefWidth="45.0" text="Knob" />
+      <Button fx:id="knob3" layoutX="1025.0" layoutY="303.0" mnemonicParsing="false" onMouseClicked="#switchToFunctionSelection" prefHeight="25.0" prefWidth="45.0" text="Knob" />
    </children>
    <effect>
       <Blend mode="HARD_LIGHT">

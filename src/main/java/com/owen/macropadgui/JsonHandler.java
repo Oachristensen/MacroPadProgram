@@ -121,10 +121,14 @@ public class JsonHandler {
 
     }
 
-    public static void uploadKeyData(JSONObject keyMapFile) {
+
+
+    public static void uploadKeyData(String key, String value) {
+        STORAGE.mkdir();
+        File KEYMAP_PATH = new File(STORAGE, "KeyMap" + GlobalData.getInstance().selectedKeyMap + ".json");
         try {
-            int keyMapChoice = GlobalData.getInstance().selectedKeyMap;
-            File KEYMAP_PATH = new File(STORAGE, "KeyMap" + keyMapChoice + ".json");
+            JSONObject keyMapFile = (JSONObject) JSONValue.parse(new String(Files.readAllBytes(KEYMAP_PATH.toPath())));;
+            keyMapFile.put(key, value);
             FileWriter file = new FileWriter(KEYMAP_PATH);
             file.write(keyMapFile.toJSONString());
             file.close();

@@ -9,11 +9,8 @@
       <change beforePath="$PROJECT_DIR$/src/main/java/com/owen/macropadgui/DeviceSelectionController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/owen/macropadgui/DeviceSelectionController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/owen/macropadgui/FunctionSelectionController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/owen/macropadgui/FunctionSelectionController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/owen/macropadgui/JsonHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/owen/macropadgui/JsonHandler.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/owen/macropadgui/KeyMapSelectionController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/owen/macropadgui/KeyMapSelectionController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/owen/macropadgui/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/owen/macropadgui/Main.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/owen/macropadgui/PortListener.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/owen/macropadgui/PortListener.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/resources/com/owen/macropadgui/DeviceSelection.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/com/owen/macropadgui/DeviceSelection.fxml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/com/owen/macropadgui/FunctionSelection.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/com/owen/macropadgui/FunctionSelection.fxml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/storage/KeyMap0.json" beforeDir="false" afterPath="$PROJECT_DIR$/storage/KeyMap0.json" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
