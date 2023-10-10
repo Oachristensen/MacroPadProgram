@@ -19,7 +19,11 @@ public class JsonHandler {
     public static final File STORAGE = new File(System.getProperty("user.dir") + "/storage/");
 
 
-    public JsonHandler(PortListener main) {
+    public JsonHandler() {
+
+    }
+
+    public void setKeyData(PortListener main) {
         STORAGE.mkdir();
         File KEYMAP_PATH = new File(STORAGE, "KeyMap" + GlobalData.getInstance().selectedKeyMap + ".json");
 

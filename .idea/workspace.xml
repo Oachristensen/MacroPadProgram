@@ -6,12 +6,10 @@
   <component name="ChangeListManager">
     <list default="true" id="d25fd3a0-72e2-4bc4-a929-5b1a8197db55" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/owen/macropadgui/DeviceSelectionController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/owen/macropadgui/DeviceSelectionController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/owen/macropadgui/FunctionSelectionController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/owen/macropadgui/FunctionSelectionController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/owen/macropadgui/JsonHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/owen/macropadgui/JsonHandler.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/owen/macropadgui/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/owen/macropadgui/Main.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/com/owen/macropadgui/DeviceSelection.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/com/owen/macropadgui/DeviceSelection.fxml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/storage/KeyMap0.json" beforeDir="false" afterPath="$PROJECT_DIR$/storage/KeyMap0.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/owen/macropadgui/KeyMapSelectionController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/owen/macropadgui/KeyMapSelectionController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/owen/macropadgui/PortListener.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/owen/macropadgui/PortListener.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/storage/KeyMap1.json" beforeDir="false" afterPath="$PROJECT_DIR$/storage/KeyMap1.json" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />

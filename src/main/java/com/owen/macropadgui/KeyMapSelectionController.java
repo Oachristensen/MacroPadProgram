@@ -33,6 +33,8 @@ public class KeyMapSelectionController implements Initializable {
 
     private static final SerialPort port = new SerialPort("COM3");
 
+    private static PortListener portListener;
+
 
 
 
@@ -70,8 +72,9 @@ public class KeyMapSelectionController implements Initializable {
                 // port.setParams(9600, 8, 1, 0); // alternate technique
                 int mask = SerialPort.MASK_RXCHAR + SerialPort.MASK_CTS + SerialPort.MASK_DSR;
                 port.setEventsMask(mask);
-                port.addEventListener(new PortListener(port, this));
+                port.addEventListener(portListener = new PortListener(port, this));
             }
+            portListener.setKeyData(this);
         } catch (Exception e) {
             e.printStackTrace();
         }

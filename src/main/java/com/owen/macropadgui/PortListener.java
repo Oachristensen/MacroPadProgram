@@ -16,13 +16,20 @@ public class PortListener implements SerialPortEventListener {
     public Map<Pair<Integer, Integer>, MacroKey> keyMap;
     private SerialPort port;
 
+    JsonHandler jsonHandler = new JsonHandler();
+
 
     public PortListener(SerialPort port, KeyMapSelectionController keyMapSelectionController){
         this.port = port;
         knobMap = new HashMap<>();
         buttonMap = new HashMap<>();
         keyMap = new HashMap<>();
-        JsonHandler jsonHandler = new JsonHandler(this);
+        jsonHandler = new JsonHandler();
+    }
+    public PortListener(){
+    }
+    public void setKeyData(KeyMapSelectionController keyMapSelectionController){
+        jsonHandler.setKeyData(this);
     }
 
     public int convertCharToInteger(char c) {
