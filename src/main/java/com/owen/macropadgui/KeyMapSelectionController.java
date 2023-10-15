@@ -41,6 +41,8 @@ public class KeyMapSelectionController implements Initializable {
 
     private static PortListener portListener;
 
+    KeyMapNameJsonHandler keyMapNameJsonHandler;
+
 
 
 
@@ -64,8 +66,8 @@ public class KeyMapSelectionController implements Initializable {
             root = loader.load();
 
             DeviceSelectionController deviceSelectionController = loader.getController();
-//            String name = keyMapList.getSelectionModel().getSelectedItem();
-//            deviceSelectionController.setKeyMapName(name);
+            String name = keyMapList.getSelectionModel().getSelectedItem().getValue();
+            deviceSelectionController.setKeyMapName(name);
 
             stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
             scene = new Scene(root);

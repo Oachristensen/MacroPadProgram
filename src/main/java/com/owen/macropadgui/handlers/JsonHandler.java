@@ -12,6 +12,7 @@ import org.json.simple.JSONValue;
 
 import java.io.File;
 import java.io.FileWriter;
+import java.io.IOException;
 import java.nio.file.Files;
 import java.util.ArrayList;
 import java.util.List;
@@ -20,9 +21,32 @@ public class JsonHandler {
 
     public static final File STORAGE = new File(System.getProperty("user.dir") + "/storage/");
 
+    private ArrayList<String> valueList;
 
     public JsonHandler() {
 
+    }
+    public static ArrayList<String> getValueList(String selectedKeyMap) {
+        ArrayList<String> valueList = new ArrayList<>();
+        STORAGE.mkdir();
+        File KEYMAP_PATH = new File(STORAGE, GlobalData.getInstance().selectedKeyMap + ".json");
+
+        try {
+            JSONObject data = (JSONObject) JSONValue.parse(new String(Files.readAllBytes(KEYMAP_PATH.toPath())));
+            System.out.println(data);
+
+            for (Object o : data.keySet()) {
+                String key = (String) o;
+                String value = (String) data.get(o);
+
+                String[] splitKey = key.split(" ");
+
+                valueList = new ArrayList<>(List.of(value.split(" ")));
+            }
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+        return valueList;
     }
 
     public void setKeyData(PortListener main) {
@@ -37,20 +61,19 @@ public class JsonHandler {
                 String key = (String) o;
                 String value = (String) data.get(o);
 
-//                System.out.println(key + "    |   " + value);
-
                 String[] splitKey = key.split(" ");
 
-                ArrayList<String> valueList = new ArrayList<>(List.of(value.split(" ")));
+                valueList = new ArrayList<>(List.of(value.split(" ")));
                 System.out.println(valueList);
+
+                ArrayList<Pair<Integer, Integer>> receivedCodeList = KeyPressHandler.convertStringToKeyCode(valueList);
 
                 switch (splitKey[0]) {
                     case "Key" -> {
                         int row = Integer.parseInt(splitKey[1]);
                         int col = Integer.parseInt(splitKey[2]);
                         int inputType = Integer.parseInt(splitKey[3]);
-                        ArrayList<Pair<Integer, Integer>>  recievedCodeList = KeyPressHandler.convertStringToKeyCode(valueList);
-                        System.out.println(recievedCodeList);
+                        System.out.println(receivedCodeList);
                         MacroKey macroKey = new MacroKey(row, col);
                         if (main.keyMap.get(new Pair<>(row, col)) != null) {
                             macroKey = main.keyMap.get(new Pair<>(row, col));
@@ -58,10 +81,10 @@ public class JsonHandler {
 
                         if (inputType == 1) {
                             macroKey.setKeyPressFunction(valueList);
-                            macroKey.setKeyPressCodeMap(recievedCodeList);
+                            macroKey.setKeyPressCodeMap(receivedCodeList);
                         } else if (inputType == 0) {
                             macroKey.setKeyReleaseFunction(valueList);
-                            macroKey.setKeyReleaseCodeMap(recievedCodeList);
+                            macroKey.setKeyReleaseCodeMap(receivedCodeList);
                         }
                         if (main.keyMap.get(new Pair<>(row, col)) == null) {
                             main.keyMap.put(new Pair<>(row, col), macroKey);
@@ -72,7 +95,6 @@ public class JsonHandler {
                     case "Button" -> {
                         int buttonNum = Integer.parseInt(splitKey[1]);
                         int inputType = Integer.parseInt(splitKey[2]);
-                        ArrayList<Pair<Integer, Integer>> recievedCodeMap = KeyPressHandler.convertStringToKeyCode(valueList);
                         MacroButton macroButton = new MacroButton(buttonNum);
                         if (main.buttonMap.get(buttonNum) != null) {
                             macroButton = main.buttonMap.get(buttonNum);
@@ -80,10 +102,10 @@ public class JsonHandler {
 
                         if (inputType == 1) {
                             macroButton.setButtonPressFunction(valueList);
-                            macroButton.setButtonPressCodeMap(recievedCodeMap);
+                            macroButton.setButtonPressCodeMap(receivedCodeList);
                         } else if (inputType == 0) {
                             macroButton.setButtonReleaseFunction(valueList);
-                            macroButton.setButtonReleaseCodeMap(recievedCodeMap);
+                            macroButton.setButtonReleaseCodeMap(receivedCodeList);
                         }
                         if (main.buttonMap.get(buttonNum) == null) {
                             main.buttonMap.put(buttonNum, macroButton);
@@ -92,7 +114,6 @@ public class JsonHandler {
                     case "Knob" -> {
                         int knobNum = Integer.parseInt(splitKey[1]);
                         int inputType = Integer.parseInt(splitKey[2]);
-                        ArrayList<Pair<Integer, Integer>>  recievedCodeMap = KeyPressHandler.convertStringToKeyCode(valueList);
                         MacroKnob macroKnob = new MacroKnob(knobNum);
                         if (main.knobMap.get(knobNum) != null) {
                             macroKnob = main.knobMap.get(knobNum);
@@ -100,18 +121,15 @@ public class JsonHandler {
 
                         if (inputType == 1) {
                             macroKnob.setKnobRightFunction(valueList);
-                            macroKnob.setKnobRightCodeMap(recievedCodeMap);
+                            macroKnob.setKnobRightCodeMap(receivedCodeList);
                         } else if (inputType == 0) {
                             macroKnob.setKnobLeftFunction(valueList);
-                            macroKnob.setKnobLeftCodeMap(recievedCodeMap);
+                            macroKnob.setKnobLeftCodeMap(receivedCodeList);
                         }
                         if (main.knobMap.get(knobNum) == null) {
                             main.knobMap.put(knobNum, macroKnob);
                         }
 
-                    }
-                    case "Name" -> {
-                        // Change Keymap name to this
                     }
                     default -> {
 
@@ -129,7 +147,6 @@ public class JsonHandler {
         }
 
     }
-
 
 
     public static void uploadKeyData(String key, String value) {

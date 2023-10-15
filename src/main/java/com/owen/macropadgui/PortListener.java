@@ -10,6 +10,8 @@ import jssc.SerialPortEvent;
 import jssc.SerialPortEventListener;
 import jssc.SerialPortException;
 
+import java.lang.reflect.Array;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -20,7 +22,7 @@ public class PortListener implements SerialPortEventListener {
     public Map<Pair<Integer, Integer>, MacroKey> keyMap;
     private SerialPort port;
 
-    JsonHandler jsonHandler = new JsonHandler();
+    public JsonHandler jsonHandler = new JsonHandler();
 
 
     public PortListener(SerialPort port, KeyMapSelectionController keyMapSelectionController){
@@ -32,6 +34,7 @@ public class PortListener implements SerialPortEventListener {
     }
     public PortListener(){
     }
+
     public void setKeyData(KeyMapSelectionController keyMapSelectionController){
         jsonHandler.setKeyData(this);
     }

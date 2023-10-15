@@ -12,6 +12,7 @@ import javafx.scene.control.*;
 import javafx.stage.Stage;
 
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.ResourceBundle;
@@ -19,15 +20,15 @@ import java.util.ResourceBundle;
 
 public class FunctionSelectionController implements Initializable {
     @FXML
-    private TextField keyInput1;
+    private Label keyInput1;
     @FXML
-    private TextField keyInput2;
+    private Label keyInput2;
     @FXML
-    private TextField keyInput3;
+    private Label keyInput3;
     @FXML
-    private TextField keyInput4;
+    private Label keyInput4;
     @FXML
-    private TextField keyInput5;
+    private Label keyInput5;
 
     @FXML
     private TreeView<String> functionList1;
@@ -51,24 +52,24 @@ public class FunctionSelectionController implements Initializable {
 
     private Stage stage;
 
-    private String[] releaseArray = {"", "", "", "", ""};
-    private String[] pressArray = {"", "", "", "", ""};
+    private String[] releaseArray = {null, null, null, null, null};
+    private String[] pressArray = {null, null, null, null, null};
 
-    private HashMap<Integer, TextField> keyTextFieldList;
+    private HashMap<Integer, Label> keyLabelList;
     private HashMap<Integer, TreeView<String>> functionTreeViewList;
-    private HashMap<Integer, Integer> functionTreeViewIndexList;
+
+    ArrayList<String> valueList = JsonHandler.getValueList(GlobalData.getInstance().selectedKeyMap);
+//    private HashMap<Integer, Integer> functionTreeViewIndexList;
 
 
-    private String[] populateArray() {
-        String[] newArray = new String[5];
-        for (Integer i : keyTextFieldList.keySet()) {
-            if (!keyTextFieldList.get(i).getText().isBlank() || !(keyTextFieldList.get(i).getText() == null)) {
-                newArray[i] = (keyTextFieldList.get(i).getText());
-            } else if (functionTreeViewList.get(i).getSelectionModel().getSelectedItem() != null) {
-                newArray[i] = (functionTreeViewList.get(i).getSelectionModel().getSelectedItem().toString());
-                functionTreeViewIndexList.put(i, functionTreeViewList.get(i).getSelectionModel().getSelectedIndex());
-            } else if (keyTextFieldList.get(i).getText().isBlank() && functionTreeViewList.get(i).getSelectionModel().getSelectedItem() == null) {
-                newArray[i] = (" ");
+    private String[] populateArray(String[] newArray) {
+        for (int i = 0; i < newArray.length; i++) {
+            if (functionTreeViewList.get(i).getSelectionModel().getSelectedItem() != null) {
+                newArray[i] = (functionTreeViewList.get(i).getSelectionModel().getSelectedItem().getValue());
+                System.out.println(functionTreeViewList.get(i).getSelectionModel().getSelectedItem().getValue());
+//                functionTreeViewIndexList.put(i, functionTreeViewList.get(i).getSelectionModel().getSelectedIndex());
+            } else if (functionTreeViewList.get(i).getSelectionModel().getSelectedItem() == null && newArray[i] == null) {
+                newArray[i] = (null);
             }
 
         }
@@ -76,6 +77,7 @@ public class FunctionSelectionController implements Initializable {
     }
 
     private void populateTreeView() {
+        ArrayList<TreeItem<String>> treeRoots = new ArrayList<>();
         TreeItem<String> topRoot = new TreeItem<String>("Special Keys");
         topRoot.setExpanded(true);
         TreeItem<String> rootFKeys = new TreeItem<String>("F Keys");
@@ -84,6 +86,7 @@ public class FunctionSelectionController implements Initializable {
             TreeItem<String> fnKey = new TreeItem<>("F" + i);
             rootFKeys.getChildren().add(fnKey);
         }
+        treeRoots.add(rootFKeys);
         TreeItem<String> rootSpecialKeys = new TreeItem<String>("Function Keys");
         rootFKeys.setExpanded(false);
         rootSpecialKeys.getChildren().addAll(
@@ -97,6 +100,7 @@ public class FunctionSelectionController implements Initializable {
                 new TreeItem<String>("Esc"),
                 new TreeItem<String>("Caps")
         );
+        treeRoots.add(rootSpecialKeys);
         TreeItem<String> rootArrowKeys = new TreeItem<String>("Arrow Keys");
         rootArrowKeys.getChildren().addAll(
                 new TreeItem<>("Up"),
@@ -104,39 +108,85 @@ public class FunctionSelectionController implements Initializable {
                 new TreeItem<>("Left"),
                 new TreeItem<>("Right")
         );
-        topRoot.getChildren().addAll(rootFKeys, rootSpecialKeys, rootArrowKeys);
+        treeRoots.add(rootArrowKeys);
+        TreeItem<String> rootLetterKeys = new TreeItem<>("Letters");
+        rootLetterKeys.getChildren().addAll(
+                new TreeItem<>("A"),
+                new TreeItem<>("B"),
+                new TreeItem<>("C"),
+                new TreeItem<>("D"),
+                new TreeItem<>("E"),
+                new TreeItem<>("F"),
+                new TreeItem<>("G"),
+                new TreeItem<>("H"),
+                new TreeItem<>("I"),
+                new TreeItem<>("J"),
+                new TreeItem<>("K"),
+                new TreeItem<>("L"),
+                new TreeItem<>("M"),
+                new TreeItem<>("N"),
+                new TreeItem<>("O"),
+                new TreeItem<>("P"),
+                new TreeItem<>("Q"),
+                new TreeItem<>("R"),
+                new TreeItem<>("S"),
+                new TreeItem<>("T"),
+                new TreeItem<>("U"),
+                new TreeItem<>("V"),
+                new TreeItem<>("W"),
+                new TreeItem<>("X"),
+                new TreeItem<>("Y"),
+                new TreeItem<>("Z")
+        );
+        treeRoots.add(rootLetterKeys);
+
+        TreeItem<String> rootNumberKeys = new TreeItem<>("Numbers");
+        rootNumberKeys.getChildren().addAll(
+        new TreeItem<>("1"),
+        new TreeItem<>("2"),
+        new TreeItem<>("3"),
+        new TreeItem<>("4"),
+        new TreeItem<>("5"),
+        new TreeItem<>("6"),
+        new TreeItem<>("7"),
+        new TreeItem<>("8"),
+        new TreeItem<>("9"),
+        new TreeItem<>("0")
+        );
+        treeRoots.add(rootNumberKeys);
+
+        topRoot.getChildren().addAll(treeRoots);
 
         for (Integer i : functionTreeViewList.keySet()) {
             functionTreeViewList.get(i).setRoot(topRoot);
         }
 
     }
+
     private void clearSelection() {
-        for (Integer i : keyTextFieldList.keySet()) {
-            System.out.println(keyTextFieldList.get(i).getText());
-            keyTextFieldList.get(i).setText(" ");
+        for (Integer i : keyLabelList.keySet()) {
+            System.out.println(keyLabelList.get(i).getText());
             functionTreeViewList.get(i).getSelectionModel().select(null);
         }
     }
 
     private void setSelection(String[] array) {
-        for (Integer i : keyTextFieldList.keySet()) {
-            System.out.println(keyTextFieldList.get(i).getText());
-            keyTextFieldList.get(i).setText(array[i]);
-            if (functionTreeViewList.get(i) != null || functionTreeViewIndexList.get(i) != null) {
-                functionTreeViewList.get(i).getSelectionModel().select(functionTreeViewIndexList.get(i));
-            }
+        for (int i = 0; i < array.length; i++) {
+            System.out.println(keyLabelList.get(i).getText());
+            keyLabelList.get(i).setText(array[i]);
+//            if (functionTreeViewList.get(i) != null || functionTreeViewIndexList.get(i) != null) {
+//                functionTreeViewList.get(i).getSelectionModel().select(functionTreeViewIndexList.get(i));
         }
     }
 
-    private void setTreeIndex() {
-        for (Integer i : keyTextFieldList.keySet()) {
-            TreeItem<String> selectedItem = functionTreeViewList.get(i).getSelectionModel().getSelectedItem();
-            if (selectedItem != null) {
-                functionTreeViewIndexList.put(i, selectedItem.getParent().getChildren().indexOf(selectedItem));
-            }
-        }
-    }
+//    private void setTreeIndex() {
+//        for (Integer i : keyLabelList.keySet()) {
+//            TreeItem<String> selectedItem = functionTreeViewList.get(i).getSelectionModel().getSelectedItem();
+//            if (selectedItem != null) {
+//                functionTreeViewIndexList.put(i, selectedItem.getParent().getChildren().indexOf(selectedItem));
+//            }
+//        }
+//    }
 
 
     public void exitFunctionSelection(ActionEvent event) {
@@ -234,10 +284,8 @@ public class FunctionSelectionController implements Initializable {
 
     public void uploadFunctionData(ActionEvent event) {
         // 0 for release 1 for press
-        Arrays.fill(releaseArray, (""));
-        releaseArray = populateArray();
-        Arrays.fill(pressArray, (""));
-        pressArray = populateArray();
+        populateArray(releaseArray);
+        populateArray(pressArray);
         setFunctionData(releaseArray, "0");
         setFunctionData(pressArray, "1");
         exitFunctionSelection(event);
@@ -246,15 +294,19 @@ public class FunctionSelectionController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        keyTextFieldList = new HashMap<>();
-        functionTreeViewList = new HashMap<>();
-        functionTreeViewIndexList = new HashMap<>();
 
-        keyTextFieldList.put(0, keyInput1);
-        keyTextFieldList.put(1, keyInput2);
-        keyTextFieldList.put(2, keyInput3);
-        keyTextFieldList.put(3, keyInput4);
-        keyTextFieldList.put(4, keyInput5);
+        System.out.println(valueList);
+//        valueList.
+
+        keyLabelList = new HashMap<>();
+        functionTreeViewList = new HashMap<>();
+//        functionTreeViewIndexList = new HashMap<>();
+
+        keyLabelList.put(0, keyInput1);
+        keyLabelList.put(1, keyInput2);
+        keyLabelList.put(2, keyInput3);
+        keyLabelList.put(3, keyInput4);
+        keyLabelList.put(4, keyInput5);
 
         functionTreeViewList.put(0, functionList1);
         functionTreeViewList.put(1, functionList2);
@@ -262,17 +314,52 @@ public class FunctionSelectionController implements Initializable {
         functionTreeViewList.put(3, functionList4);
         functionTreeViewList.put(4, functionList5);
 
-        functionTreeViewIndexList.put(0, 1);
-        functionTreeViewIndexList.put(1, 2);
-        functionTreeViewIndexList.put(2, 3);
-        functionTreeViewIndexList.put(3, 4);
-        functionTreeViewIndexList.put(4, 5);
+//        functionTreeViewIndexList.put(0, 1);
+//        functionTreeViewIndexList.put(1, 2);
+//        functionTreeViewIndexList.put(2, 3);
+//        functionTreeViewIndexList.put(3, 4);
+//        functionTreeViewIndexList.put(4, 5);
 
         populateTreeView();
+
         if (GlobalData.getInstance().selectedItemID.toCharArray()[1] == 'n') {
             pressReleaseToggleButton.setText("LEFT");
         }
 
+        functionList1.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<TreeItem<String>>() {
+            @Override
+            public void changed(ObservableValue<? extends TreeItem<String>> observableValue, TreeItem<String> stringTreeItem, TreeItem<String> t1) {
+                keyInput1.setText(functionList1.getSelectionModel().getSelectedItem().getValue());
+            }
+        });
+        functionList2.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<TreeItem<String>>() {
+            @Override
+            public void changed(ObservableValue<? extends TreeItem<String>> observableValue, TreeItem<String> stringTreeItem, TreeItem<String> t1) {
+                keyInput2.setText(functionList2.getSelectionModel().getSelectedItem().getValue());
+
+            }
+        });
+
+        functionList3.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<TreeItem<String>>() {
+
+            @Override
+            public void changed(ObservableValue<? extends TreeItem<String>> observableValue, TreeItem<String> stringTreeItem, TreeItem<String> t1) {
+                keyInput3.setText(functionList3.getSelectionModel().getSelectedItem().getValue());
+            }
+        });
+        functionList4.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<TreeItem<String>>() {
+            @Override
+            public void changed(ObservableValue<? extends TreeItem<String>> observableValue, TreeItem<String> stringTreeItem, TreeItem<String> t1) {
+                keyInput4.setText(functionList4.getSelectionModel().getSelectedItem().getValue());
+
+            }
+        });
+        functionList5.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<TreeItem<String>>() {
+            @Override
+            public void changed(ObservableValue<? extends TreeItem<String>> observableValue, TreeItem<String> stringTreeItem, TreeItem<String> t1) {
+                keyInput5.setText(functionList5.getSelectionModel().getSelectedItem().getValue());
+            }
+        });
 
         pressReleaseToggleButton.selectedProperty().addListener(new ChangeListener<Boolean>() {
             @Override
@@ -280,17 +367,15 @@ public class FunctionSelectionController implements Initializable {
                 if (GlobalData.getInstance().selectedItemID.toCharArray()[1] == 'n') {
                     if (isSelected == false) {
 
-                        Arrays.fill(releaseArray, (""));
-                        releaseArray = populateArray();
-                        setTreeIndex();
+                        releaseArray = populateArray(releaseArray);
+//                        setTreeIndex();
                         clearSelection();
                         setSelection(pressArray);
                         pressReleaseToggleButton.setText("LEFT");
 
                     } else {
-                        Arrays.fill(pressArray, (""));
-                        pressArray = populateArray();
-                        setTreeIndex();
+                        pressArray = populateArray(pressArray);
+//                        setTreeIndex();
                         clearSelection();
                         setSelection(releaseArray);
                         pressReleaseToggleButton.setText("RIGHT");
@@ -299,15 +384,13 @@ public class FunctionSelectionController implements Initializable {
                 } else {
                     if (isSelected == false) {
 
-                        Arrays.fill(releaseArray, (""));
-                        releaseArray = populateArray();
+                        releaseArray = populateArray(releaseArray);
                         clearSelection();
                         setSelection(pressArray);
                         pressReleaseToggleButton.setText("PRESS");
 
                     } else {
-                        Arrays.fill(pressArray, (""));
-                        pressArray = populateArray();
+                        pressArray = populateArray(pressArray);
                         clearSelection();
                         setSelection(releaseArray);
                         pressReleaseToggleButton.setText("RELEASE");

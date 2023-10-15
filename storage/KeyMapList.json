@@ -1,12 +1,1 @@
-{
-  "KeyMapList3": "TestFile1",
-  "KeyMapList4": "List 5",
-  "KeyMapList5": "DefaultList 6",
-  "KeyMapList6": "DefaultList 7",
-  "KeyMapList7": "DefaultList 25",
-  "KeyMapList8": "DefaultList 9",
-  "KeyMapList9": "DefaultList 10",
-  "KeyMapList0": "DefaultList 1",
-  "KeyMapList1": "DefaultList 2",
-  "KeyMapList2": "DefaultList 3"
-}
+{"KeyMapList3":"DefaultList 1","KeyMapList4":"DefaultList 2","KeyMapList5":"DefaultList 3","KeyMapList6":"DefaultList 4","KeyMapList7":"DefaultList 5","KeyMapList8":"DefaultList 6","KeyMapList9":"DefaultList 7","KeyMapList0":"DefaultList 8","KeyMapList1":"DefaultList 9","KeyMapList2":"DefaultList 10"}
