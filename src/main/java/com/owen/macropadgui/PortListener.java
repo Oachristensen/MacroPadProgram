@@ -1,5 +1,9 @@
 package com.owen.macropadgui;
 
+import com.owen.macropadgui.devices.MacroButton;
+import com.owen.macropadgui.devices.MacroKey;
+import com.owen.macropadgui.devices.MacroKnob;
+import com.owen.macropadgui.handlers.JsonHandler;
 import javafx.util.Pair;
 import jssc.SerialPort;
 import jssc.SerialPortEvent;

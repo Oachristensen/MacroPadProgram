@@ -12,7 +12,15 @@ import java.util.ArrayList;
 public class Main extends Application {
 
 /*TODO
-Bugs: cannot switch keymap
+Store function data in a label that can be diplayed when opened
+Saving keymap names and writing on upload
+Adding functionality to the Treeview selection
+Fixing bugs/Fixing old stuff:
+   Go through and check names
+   make things static/final if possible
+   remove unnecessary things
+   comments?
+
 
     */
 

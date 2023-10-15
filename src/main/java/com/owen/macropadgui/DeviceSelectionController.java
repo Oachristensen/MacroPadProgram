@@ -1,6 +1,9 @@
 package com.owen.macropadgui;
 
+import com.owen.macropadgui.GlobalData;
+import com.owen.macropadgui.handlers.KeyMapNameJsonHandler;
 import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
@@ -10,6 +13,7 @@ import javafx.scene.control.*;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.shape.*;
 import javafx.stage.Stage;
+import org.controlsfx.control.action.Action;
 import org.json.simple.JSONObject;
 
 import java.util.ArrayList;
@@ -89,6 +93,12 @@ public class DeviceSelectionController {
         } catch (Exception e) {
             e.printStackTrace();
         }
+
+    }
+
+    public void uploadNameData(ActionEvent event) {
+        String name = keyMapName.getText();
+        KeyMapNameJsonHandler.uploadKeyMapNames(name);
 
     }
 }

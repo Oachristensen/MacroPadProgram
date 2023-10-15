@@ -1,7 +1,12 @@
 package com.owen.macropadgui;
 
+import com.owen.macropadgui.DeviceSelectionController;
+import com.owen.macropadgui.GlobalData;
+import com.owen.macropadgui.PortListener;
+import com.owen.macropadgui.handlers.KeyMapNameJsonHandler;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
+import javafx.collections.ListChangeListener;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -11,18 +16,19 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
+import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
 import javafx.stage.Stage;
+import javafx.util.Pair;
 import jssc.SerialPort;
 
 import java.net.URL;
 import java.util.ArrayList;
-import java.util.EventListener;
 import java.util.ResourceBundle;
 
 public class KeyMapSelectionController implements Initializable {
     @FXML
-    private ListView<String> keyMapList;
+    private ListView<Pair<String, String>> keyMapList;
 
     @FXML
     private Button selectButton;
@@ -39,9 +45,8 @@ public class KeyMapSelectionController implements Initializable {
 
 
 
-
     public void checkIfKeyMapSelected(ActionEvent event) {
-        if (GlobalData.getInstance().selectedKeyMap != -1) {
+        if (GlobalData.getInstance().selectedKeyMap != null) {
             switchToDeviceSelection(event);
 
         } else {
@@ -59,8 +64,8 @@ public class KeyMapSelectionController implements Initializable {
             root = loader.load();
 
             DeviceSelectionController deviceSelectionController = loader.getController();
-            String name = keyMapList.getSelectionModel().getSelectedItem();
-            deviceSelectionController.setKeyMapName(name);
+//            String name = keyMapList.getSelectionModel().getSelectedItem();
+//            deviceSelectionController.setKeyMapName(name);
 
             stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
             scene = new Scene(root);
@@ -82,13 +87,30 @@ public class KeyMapSelectionController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        KeyMapNameJsonHandler keyMapNameJsonHandler = new KeyMapNameJsonHandler(this);
-        ArrayList<String> list = keyMapNameJsonHandler.getList();
-        keyMapList.getItems().addAll(list);
-        keyMapList.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<String>() {
+        keyMapList.setCellFactory(param -> new ListCell<Pair<String, String>>() {
             @Override
-            public void changed(ObservableValue<? extends String> observableValue, String s, String t1) {
-                GlobalData.getInstance().selectedKeyMap = keyMapList.getSelectionModel().getSelectedIndex();
+            protected void updateItem(Pair<String, String> pair, boolean empty) {
+                super.updateItem(pair, empty);
+                if (empty || pair == null || pair.getKey() == null) {
+                    setText(null);
+                } else {
+                    setText(pair.getValue());
+                }
+            }
+        });
+        keyMapList.getChildrenUnmodifiable().addListener(new ListChangeListener<Node>() {
+            @Override
+            public void onChanged(Change<? extends Node> change) {
+            }
+        });
+        KeyMapNameJsonHandler keyMapNameJsonHandler = new KeyMapNameJsonHandler(this);
+        ArrayList<Pair<String, String>> list = keyMapNameJsonHandler.getList();
+        keyMapList.getItems().addAll(list);
+        keyMapList.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<>() {
+            @Override
+            public void changed(ObservableValue<? extends Pair<String, String>> observableValue, Pair<String, String> pair, Pair<String, String> selectedValue) {
+                System.out.println(selectedValue);
+                GlobalData.getInstance().selectedKeyMap = selectedValue.getKey();
                 System.out.println(GlobalData.getInstance().selectedKeyMap);
             }
 

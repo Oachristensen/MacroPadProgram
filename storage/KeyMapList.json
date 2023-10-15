@@ -1,12 +1,12 @@
 {
-  "KeyMapList1": "1",
-  "KeyMapList2": "2",
-  "KeyMapList3": "3",
-  "KeyMapList4": "4",
-  "KeyMapList5": "5",
-  "KeyMapList6": "6",
-  "KeyMapList7": "7",
-  "KeyMapList8": "8",
-  "KeyMapList9": "9",
-  "KeyMapList10": "10"
+  "KeyMapList3": "TestFile1",
+  "KeyMapList4": "List 5",
+  "KeyMapList5": "DefaultList 6",
+  "KeyMapList6": "DefaultList 7",
+  "KeyMapList7": "DefaultList 25",
+  "KeyMapList8": "DefaultList 9",
+  "KeyMapList9": "DefaultList 10",
+  "KeyMapList0": "DefaultList 1",
+  "KeyMapList1": "DefaultList 2",
+  "KeyMapList2": "DefaultList 3"
 }

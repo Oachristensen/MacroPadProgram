@@ -1,6 +1,7 @@
 package com.owen.macropadgui;
 
 
+import com.owen.macropadgui.handlers.JsonHandler;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
@@ -9,11 +10,8 @@ import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.control.*;
 import javafx.stage.Stage;
-import org.json.simple.JSONObject;
-import org.json.simple.JSONValue;
 
 import java.net.URL;
-import java.nio.file.Files;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.ResourceBundle;
@@ -113,7 +111,6 @@ public class FunctionSelectionController implements Initializable {
         }
 
     }
-
     private void clearSelection() {
         for (Integer i : keyTextFieldList.keySet()) {
             System.out.println(keyTextFieldList.get(i).getText());

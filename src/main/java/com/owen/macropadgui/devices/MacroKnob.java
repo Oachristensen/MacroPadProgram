@@ -1,4 +1,4 @@
-package com.owen.macropadgui;
+package com.owen.macropadgui.devices;
 
 import commands.MediaKeys;
 import javafx.util.Pair;
@@ -23,15 +23,15 @@ public class MacroKnob {
     private int counter = 100;
 
     private ArrayList<String> functionList;
-    private Map<Pair<Integer, Integer>, Integer> knobLeftCodeMap;
-    private Map<Pair<Integer, Integer>, Integer> knobRightCodeMap;
+    private ArrayList<Pair<Integer, Integer>>  knobLeftCodeMap;
+    private ArrayList<Pair<Integer, Integer>>  knobRightCodeMap;
 
 
     public MacroKnob(int knob) {
         knobNum = knob;
         functionList = new ArrayList<>();
-        knobLeftCodeMap = new HashMap<>();
-        knobRightCodeMap = new HashMap<>();
+        knobLeftCodeMap = new ArrayList<>();
+        knobRightCodeMap = new ArrayList<>();
     }
 
     public void onAction(int direction) {
@@ -49,12 +49,13 @@ public class MacroKnob {
     public void onKnobLeft() {
         try {
             Robot robot = new Robot();
-            for (Pair<Integer, Integer> p : knobLeftCodeMap.keySet()) {
+            for (Pair<Integer, Integer> p : knobLeftCodeMap) {
                 if (p.getValue() != null) {
                     robot.keyPress(VK_SHIFT);
                 }
                 if (p.getKey() > 0) {
                     robot.keyPress(p.getKey());
+                    robot.keyRelease(p.getKey());
                 }
                 if (p.getValue() != null) {
                     robot.keyRelease(VK_SHIFT);
@@ -71,12 +72,13 @@ public class MacroKnob {
     public void onKnobRight() {
         try {
             Robot robot = new Robot();
-            for (Pair<Integer, Integer> p : knobRightCodeMap.keySet()) {
+            for (Pair<Integer, Integer> p : knobRightCodeMap) {
                 if (p.getValue() != null) {
                     robot.keyPress(VK_SHIFT);
                 }
                 if (p.getKey() > 0) {
                     robot.keyPress(p.getKey());
+                    robot.keyRelease(p.getKey());
                 }
                 if (p.getValue() != null) {
                     robot.keyRelease(VK_SHIFT);
@@ -98,11 +100,11 @@ public class MacroKnob {
         this.functionList = list;
     }
 
-    public void setKnobLeftCodeMap(Map<Pair<Integer, Integer>, Integer> recievedCodeMap) {
+    public void setKnobLeftCodeMap(ArrayList<Pair<Integer, Integer>>  recievedCodeMap) {
         knobLeftCodeMap = recievedCodeMap;
     }
 
-    public void setKnobRightCodeMap(Map<Pair<Integer, Integer>, Integer> recievedCodeMap) {
+    public void setKnobRightCodeMap(ArrayList<Pair<Integer, Integer>>  recievedCodeMap) {
         knobRightCodeMap = recievedCodeMap;
     }
 }

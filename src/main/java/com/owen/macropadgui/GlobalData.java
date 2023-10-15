@@ -1,5 +1,7 @@
 package com.owen.macropadgui;
 
+import javafx.util.Pair;
+
 public class GlobalData {
     private final static GlobalData globalData = new GlobalData();
 
@@ -8,9 +10,11 @@ public class GlobalData {
 
     }
 
-    public int selectedKeyMap = -1;
+    public String selectedKeyMap;
 
     public String selectedItemID;
+
+    public String selectedKeyMapName;
 
 
     private GlobalData(){}

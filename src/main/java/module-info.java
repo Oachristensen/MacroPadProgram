@@ -18,4 +18,8 @@ module com.owen.macropadgui {
 
     opens com.owen.macropadgui to javafx.fxml;
     exports com.owen.macropadgui;
+    exports com.owen.macropadgui.devices;
+    opens com.owen.macropadgui.devices to javafx.fxml;
+    exports com.owen.macropadgui.handlers;
+    opens com.owen.macropadgui.handlers to javafx.fxml;
 }

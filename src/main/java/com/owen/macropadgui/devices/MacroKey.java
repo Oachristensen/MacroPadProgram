@@ -1,4 +1,4 @@
-package com.owen.macropadgui;
+package com.owen.macropadgui.devices;
 
 import commands.MediaKeys;
 import javafx.util.Pair;
@@ -17,8 +17,8 @@ public class MacroKey {
 
     private ArrayList<String> releaseFunctionList;
     private ArrayList<String> pressFunctionList;
-    private Map<Pair<Integer, Integer>, Integer> keyPressCodeMap;
-    private Map<Pair<Integer, Integer>, Integer> keyReleaseCodeMap;
+    private ArrayList<Pair<Integer, Integer>>  keyPressCodeMap;
+    private ArrayList<Pair<Integer, Integer>>  keyReleaseCodeMap;
 
 
     /*
@@ -34,8 +34,8 @@ public class MacroKey {
         int type;
         releaseFunctionList = new ArrayList<>();
         pressFunctionList = new ArrayList<>();
-        keyPressCodeMap = new HashMap<>();
-        keyReleaseCodeMap = new HashMap<>();
+        keyPressCodeMap = new ArrayList<>();
+        keyReleaseCodeMap = new ArrayList<>();
 
     }
 
@@ -53,12 +53,13 @@ public class MacroKey {
 
             System.out.println("Key in row: " + keyRow + " with key Num: " + keyNum + " Pressed |   Function: " + keyPressCodeMap);
             Robot robot = new Robot();
-            for (Pair<Integer, Integer> p : keyPressCodeMap.keySet()) {
+            for (Pair<Integer, Integer> p : keyPressCodeMap) {
                 if (p.getValue() != null) {
                     robot.keyPress(VK_SHIFT);
                 }
                 if (p.getKey() > 0){
                     robot.keyPress(p.getKey());
+                    robot.keyRelease(p.getKey());
                 }
                 if (p.getValue() != null) {
                     robot.keyRelease(VK_SHIFT);
@@ -76,12 +77,13 @@ public class MacroKey {
         try {
             System.out.println("Key in row: " + keyRow + " with key Num: " + keyNum + " Released");
             Robot robot = new Robot();
-            for (Pair<Integer, Integer> p :  keyReleaseCodeMap.keySet()) {
+            for (Pair<Integer, Integer> p :  keyReleaseCodeMap) {
                 if (p.getValue() != null) {
                     robot.keyPress(VK_SHIFT);
                 }
                 if (p.getKey() > 0){
                     robot.keyPress(p.getKey());
+                    robot.keyRelease(p.getKey());
                 }
                 if (p.getValue() != null) {
                     robot.keyRelease(VK_SHIFT);
@@ -102,10 +104,10 @@ public class MacroKey {
         releaseFunctionList = list;
     }
 
-    public void setKeyPressCodeMap(Map<Pair<Integer, Integer>, Integer> recievedCodeMap) {
+    public void setKeyPressCodeMap(ArrayList<Pair<Integer, Integer>>  recievedCodeMap) {
         keyPressCodeMap = recievedCodeMap;
     }
-    public void setKeyReleaseCodeMap(Map<Pair<Integer, Integer>, Integer> recievedCodeMap) {
+    public void setKeyReleaseCodeMap(ArrayList<Pair<Integer, Integer>>  recievedCodeMap) {
         keyReleaseCodeMap = recievedCodeMap;
     }
 
