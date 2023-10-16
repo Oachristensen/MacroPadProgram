@@ -2,7 +2,7 @@
   An easy-to-understand and program Macropad with 8 keys and 3 rotary encoders.
 
   ### How to use
-    Once built, you can upload the firmware "Here"
+    Once built, you can upload the firmware using the code found in Arduino Files, you will need Arduino IDE
     From there, you can customize and change macros by selecting each individual key from a dropdown shown "Here"
 
   ### TODO
