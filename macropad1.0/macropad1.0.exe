@@ -1,0 +1,214 @@
+# 0 "C:\\Users\\chrst\\Documents\\Arduino\\macropad1.0\\macropad1.0.ino"
+# 1 "C:\\Users\\chrst\\Documents\\Arduino\\macropad1.0//"
+# 0 "<built-in>"
+# 0 "<command-line>"
+# 1 "C:\\Users\\chrst\\Documents\\Arduino\\macropad1.0\\macropad1.0.ino"
+# 9 "C:\\Users\\chrst\\Documents\\Arduino\\macropad1.0\\macropad1.0.ino"
+const int Num_Rows = 2;
+const int Num_Cols = 4;
+
+
+
+
+
+const int Num_Knobs = 3;
+# 28 "C:\\Users\\chrst\\Documents\\Arduino\\macropad1.0\\macropad1.0.ino"
+const int debounceDelay = 20;
+
+bool multiKeyPress[Num_Rows][Num_Cols];
+bool lastKeyPress[Num_Rows][Num_Cols];
+bool lastButtonPress[Num_Knobs];
+unsigned long lastDebounceTime[Num_Rows][Num_Cols];
+bool lastStateCLK[Num_Knobs];
+int currentStateCLK;
+int Num_Rotations[Num_Knobs];
+
+void setup() {
+
+pinMode(16, OUTPUT);
+pinMode(15, OUTPUT);
+
+pinMode(21, INPUT_PULLUP);
+pinMode(20, INPUT_PULLUP);
+pinMode(19, INPUT_PULLUP);
+pinMode(18, INPUT_PULLUP);
+pinMode(2, INPUT);
+pinMode(5, INPUT);
+pinMode(8, INPUT);
+pinMode(3, INPUT);
+pinMode(6, INPUT);
+pinMode(9, INPUT);
+pinMode(4, INPUT);
+pinMode(7, INPUT);
+pinMode(10, INPUT);
+}
+void handleKeyPress(int row, int col) {
+
+
+
+  for (int rowlist = 0; rowlist < Num_Rows; rowlist++) {
+    for (int collist = 0; collist < Num_Cols; collist++) {
+      if (multiKeyPress[rowlist][collist]) {
+        Serial.println(String("Row ") + rowlist + ", Col " + collist + " is pressed");
+      }
+      else {
+        Serial.println(String("Row ") + rowlist + ", Col " + collist + " is unpressed");
+      }
+      delay(100);
+    }
+  }
+
+  Serial.println();
+}
+void handleKeyRelease(int row, int col) {
+
+
+
+  if (!multiKeyPress[row][col]) {
+    Serial.println(String("Row ") + row + ", Col " + col + " is released");
+  } else {
+    Serial.println(String("Row ") + row + ", Col " + col + " is still pressed");
+  }
+
+  Serial.println();
+}
+
+void handleButtonPress(int button) {
+
+  Serial.println(String("Button ") + button + " is pressed");
+}
+void handleButtonRelease(int button) {
+  Serial.println(String("Button ") + button + " is released");
+}
+
+void handleRotationCCW(int knob) {
+  Serial.println(String("Knob ") + knob + " was rotated counter clock wise");
+}
+void handleRotationCW(int knob) {
+  Serial.println(String("Knob ") + knob + " was rotated clock wise");
+}
+
+int getButtonPin(int button) {
+  switch(button) {
+    case 0:
+      return 2;
+    case 1:
+      return 5;
+    case 2:
+      return 8;
+    default:
+      return -1;
+  }
+}
+int getColumnPin(int col) {
+
+  switch (col) {
+    case 0:
+      return 21;
+    case 1:
+      return 20;
+    case 2:
+      return 19;
+    case 3:
+      return 18;
+    default:
+      return -1;
+  }
+}
+int getRowPin(int row) {
+
+  switch (row) {
+    case 0:
+      return 16;
+    case 1:
+      return 15;
+    default:
+      return -1;
+  }
+}
+int getRotationPin(int knob) {
+
+  switch(knob) {
+    case 0:
+      return 4;
+    case 1:
+      return 7;
+    case 2:
+      return 10;
+    default:
+      return -1;
+  }
+}
+int getDirectionPin(int knob) {
+
+  switch(knob) {
+    case 0:
+      return 3;
+    case 1:
+      return 6;
+    case 2:
+      return 9;
+    default:
+      return -1;
+  }
+}
+
+void loop() {
+
+  for (int row = 0; row < Num_Rows; row++) {
+    digitalWrite(getRowPin(row), LOW);
+
+    for (int col = 0; col < Num_Cols; col++) {
+      bool KeyisPressed = (digitalRead(getColumnPin(col)) == LOW);
+
+      if (KeyisPressed != lastKeyPress[row][col]) {
+        lastDebounceTime[row][col] = millis();
+      }
+
+      if (millis() - lastDebounceTime[row][col] >= debounceDelay) {
+        if (KeyisPressed != multiKeyPress[row][col]) {
+          multiKeyPress[row][col] = KeyisPressed;
+
+          if (KeyisPressed) {
+            handleKeyPress(row, col);
+          }
+          else {
+            handleKeyRelease(row, col);
+          }
+        }
+      }
+
+      lastKeyPress[row][col] = KeyisPressed;
+    }
+
+    digitalWrite(getRowPin(row), HIGH);
+
+  }
+
+
+  for (int button = 0; button < Num_Knobs; button++) {
+    bool ButtonisPressed = (digitalRead(getButtonPin(button)) == HIGH);
+    if (ButtonisPressed == false && lastButtonPress[button] == true) {
+      handleButtonPress(button);
+    }
+    if (ButtonisPressed == true && lastButtonPress[button] == false) {
+      handleButtonRelease(button);
+    }
+  lastButtonPress[button] = ButtonisPressed;
+  }
+
+
+
+  for (int knob = 0; knob < Num_Knobs; knob++) {
+    currentStateCLK = (digitalRead(getRotationPin(knob)));
+    if (currentStateCLK != lastStateCLK[knob] && currentStateCLK == 1) {
+      if (digitalRead(getDirectionPin(knob)) != currentStateCLK) {
+        handleRotationCW(knob);
+      }
+      else {
+        handleRotationCCW(knob);
+      }
+    }
+    lastStateCLK[knob] = currentStateCLK;
+  }
+}
