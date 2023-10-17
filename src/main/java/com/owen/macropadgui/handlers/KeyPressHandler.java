@@ -75,10 +75,10 @@ public class KeyPressHandler {
                 case "OPEN_BRACE": keyCodeList.add(new Pair<>(VK_OPEN_BRACKET, VK_SHIFT) ); break;
                 case "CLOSE_BRACE": keyCodeList.add(new Pair<>(VK_CLOSE_BRACKET, VK_SHIFT) ); break;
                 case "LINE": keyCodeList.add(new Pair<>(VK_BACK_SLASH, VK_SHIFT) ); break;
+                case "COLON": keyCodeList.add(new Pair<>(VK_SEMICOLON, VK_SHIFT) ); break;
                 case "SEMICOLON": keyCodeList.add(new Pair<>(VK_SEMICOLON, null) ); break;
-                case ":": keyCodeList.add(new Pair<>(VK_COLON, null) ); break;
                 case "QUOTE": keyCodeList.add(new Pair<>(VK_QUOTE, null) ); break;
-                case "QUOTEDBL": keyCodeList.add(new Pair<>(VK_QUOTEDBL, null) ); break;
+                case "DOUBLEQUOTE": keyCodeList.add(new Pair<>(VK_QUOTE, VK_SHIFT) ); break;
                 case "COMMA": keyCodeList.add(new Pair<>(VK_COMMA, null)); break;
                 case "LEFT_ANGLE_BRACKET": keyCodeList.add(new Pair<>(VK_COMMA, VK_SHIFT) ); break;
                 case "PERIOD": keyCodeList.add(new Pair<>(VK_PERIOD, null) ); break;
@@ -88,7 +88,7 @@ public class KeyPressHandler {
                 case "SPACE": keyCodeList.add(new Pair<>(VK_SPACE, null) ); break;
                 case "VOL_UP": keyCodeList.add(new Pair<>(MediaKeys.VOL_UP, MediaKeys.MEDIAKEY) ); break;
                 case "VOL_DOWN": keyCodeList.add(new Pair<>(MediaKeys.VOL_DOWN, MediaKeys.MEDIAKEY) ); break;
-                case "PLAY": keyCodeList.add(new Pair<>(MediaKeys.PLAY, MediaKeys.MEDIAKEY) ); break;
+                case "PLAY/PAUSE": keyCodeList.add(new Pair<>(MediaKeys.PLAY, MediaKeys.MEDIAKEY) ); break;
                 case "NEXT": keyCodeList.add(new Pair<>(MediaKeys.NEXT, MediaKeys.MEDIAKEY) ); break;
                 case "PREV": keyCodeList.add(new Pair<>(MediaKeys.PREV, MediaKeys.MEDIAKEY) ); break;
                 case "MUTE": keyCodeList.add(new Pair<>(MediaKeys.MUTE, MediaKeys.MEDIAKEY) ); break;

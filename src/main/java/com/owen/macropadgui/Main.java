@@ -4,11 +4,6 @@ import javafx.application.Application;
 import javafx.fxml.*;
 import javafx.scene.*;
 import javafx.stage.Stage;
-import jssc.SerialPort;
-
-import java.io.IOException;
-import java.util.ArrayList;
-
 public class Main extends Application {
 
 /*TODO

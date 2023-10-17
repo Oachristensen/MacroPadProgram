@@ -59,7 +59,6 @@ public class FunctionSelectionController implements Initializable {
     private HashMap<Integer, TreeView<String>> functionTreeViewList;
 
     ArrayList<String> valueList = JsonHandler.getValueList(GlobalData.getInstance().selectedKeyMap);
-//    private HashMap<Integer, Integer> functionTreeViewIndexList;
 
 
     private String[] populateArray(String[] newArray) {
@@ -142,18 +141,31 @@ public class FunctionSelectionController implements Initializable {
 
         TreeItem<String> rootNumberKeys = new TreeItem<>("Numbers");
         rootNumberKeys.getChildren().addAll(
-        new TreeItem<>("1"),
-        new TreeItem<>("2"),
-        new TreeItem<>("3"),
-        new TreeItem<>("4"),
-        new TreeItem<>("5"),
-        new TreeItem<>("6"),
-        new TreeItem<>("7"),
-        new TreeItem<>("8"),
-        new TreeItem<>("9"),
-        new TreeItem<>("0")
+                new TreeItem<>("1"),
+                new TreeItem<>("2"),
+                new TreeItem<>("3"),
+                new TreeItem<>("4"),
+                new TreeItem<>("5"),
+                new TreeItem<>("6"),
+                new TreeItem<>("7"),
+                new TreeItem<>("8"),
+                new TreeItem<>("9"),
+                new TreeItem<>("0")
         );
         treeRoots.add(rootNumberKeys);
+
+        TreeItem<String> rootMediaKeys = new TreeItem<>("Media Keys");
+        rootMediaKeys.getChildren().addAll(
+                new TreeItem<>("VOL_UP"),
+                new TreeItem<>("VOL_DOWN"),
+                new TreeItem<>("PLAY/PAUSE"),
+                new TreeItem<>("NEXT"),
+                new TreeItem<>("NEXT"),
+                new TreeItem<>("PREV"),
+                new TreeItem<>("MUTE"),
+                new TreeItem<>("STOP")
+        );
+        treeRoots.add(rootMediaKeys);
 
         topRoot.getChildren().addAll(treeRoots);
 
@@ -174,20 +186,8 @@ public class FunctionSelectionController implements Initializable {
         for (int i = 0; i < array.length; i++) {
             System.out.println(keyLabelList.get(i).getText());
             keyLabelList.get(i).setText(array[i]);
-//            if (functionTreeViewList.get(i) != null || functionTreeViewIndexList.get(i) != null) {
-//                functionTreeViewList.get(i).getSelectionModel().select(functionTreeViewIndexList.get(i));
         }
     }
-
-//    private void setTreeIndex() {
-//        for (Integer i : keyLabelList.keySet()) {
-//            TreeItem<String> selectedItem = functionTreeViewList.get(i).getSelectionModel().getSelectedItem();
-//            if (selectedItem != null) {
-//                functionTreeViewIndexList.put(i, selectedItem.getParent().getChildren().indexOf(selectedItem));
-//            }
-//        }
-//    }
-
 
     public void exitFunctionSelection(ActionEvent event) {
         stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
