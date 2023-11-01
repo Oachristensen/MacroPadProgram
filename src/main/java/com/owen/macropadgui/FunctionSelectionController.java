@@ -83,9 +83,9 @@ public class FunctionSelectionController implements Initializable {
             rootFKeys.getChildren().add(fnKey);
         }
         treeRoots.add(rootFKeys);
-        TreeItem<String> rootSpecialKeys = new TreeItem<>("Function Keys");
+        TreeItem<String> rootModifierKeys = new TreeItem<>("Modifier Keys");
         rootFKeys.setExpanded(false);
-        rootSpecialKeys.getChildren().addAll(
+        rootModifierKeys.getChildren().addAll(
                 new TreeItem<>("Space"),
                 new TreeItem<>("Enter"),
                 new TreeItem<>("Backspace"),
@@ -96,7 +96,7 @@ public class FunctionSelectionController implements Initializable {
                 new TreeItem<>("Esc"),
                 new TreeItem<>("Caps")
         );
-        treeRoots.add(rootSpecialKeys);
+        treeRoots.add(rootModifierKeys);
         TreeItem<String> rootArrowKeys = new TreeItem<>("Arrow Keys");
         rootArrowKeys.getChildren().addAll(
                 new TreeItem<>("Up"),
@@ -163,6 +163,44 @@ public class FunctionSelectionController implements Initializable {
                 new TreeItem<>("STOP")
         );
         treeRoots.add(rootMediaKeys);
+
+        TreeItem<String> rootSpecialKeys = new TreeItem<>("Special Characters");
+        rootSpecialKeys.getChildren().addAll(
+                new TreeItem<>("!"),
+                new TreeItem<>("="),
+                new TreeItem<>("-"),
+                new TreeItem<>("`"),
+                new TreeItem<>("~"),
+                new TreeItem<>("@"),
+                new TreeItem<>("$"),
+                new TreeItem<>("#"),
+                new TreeItem<>("%"),
+                new TreeItem<>("^"),
+                new TreeItem<>("&"),
+                new TreeItem<>("*"),
+                new TreeItem<>("("),
+                new TreeItem<>(")"),
+                new TreeItem<>("_"),
+                new TreeItem<>("+"),
+                new TreeItem<>("["),
+                new TreeItem<>("]"),
+                new TreeItem<>("\\"),
+                new TreeItem<>("{"),
+                new TreeItem<>("}"),
+                new TreeItem<>("|"),
+                new TreeItem<>(":"),
+                new TreeItem<>(";"),
+                new TreeItem<>("'"),
+                new TreeItem<>("\""),
+                new TreeItem<>(","),
+                new TreeItem<>("<"),
+                new TreeItem<>(">"),
+                new TreeItem<>("."),
+                new TreeItem<>("/"),
+                new TreeItem<>("?"),
+                new TreeItem<>("%")
+                );
+        treeRoots.add(rootSpecialKeys);
 
         topRoot.getChildren().addAll(treeRoots);
 
@@ -293,11 +331,9 @@ public class FunctionSelectionController implements Initializable {
     public void initialize(URL url, ResourceBundle resourceBundle) {
 
         System.out.println(valueList);
-//        valueList.
 
         keyLabelList = new HashMap<>();
         functionTreeViewList = new HashMap<>();
-//        functionTreeViewIndexList = new HashMap<>();
 
         keyLabelList.put(0, keyInput1);
         keyLabelList.put(1, keyInput2);
@@ -306,13 +342,12 @@ public class FunctionSelectionController implements Initializable {
         keyLabelList.put(4, keyInput5);
 
 
-        for (int i = 0; i < keyLabelList.size(); i++) {
-            try {
-
-                keyLabelList.get(i).setText(valueList.get(i));
-            } catch (Exception ignored) {
-            }
-        }
+//        for (int i = 0; i < keyLabelList.size(); i++) {
+//            try {
+//                keyLabelList.get(i).setText(valueList.get(i));
+//            } catch (Exception ignored) {
+//            }
+//        }
 
 
         functionTreeViewList.put(0, functionList1);

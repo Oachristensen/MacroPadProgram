@@ -8,7 +8,6 @@ public class Main extends Application {
 
 /*TODO
 Store function data in a label that can be displayed when opened (Will probably become WIP)
-Fixing KeypressHandler to handle all keys
 Fixing bugs/Fixing old stuff:
    Go through and check names
    make things static/final if possible
@@ -17,7 +16,6 @@ Fixing bugs/Fixing old stuff:
 
 
     */
-
 
     @Override
     public void start(Stage stage){

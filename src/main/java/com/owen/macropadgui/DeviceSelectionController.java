@@ -22,7 +22,7 @@ import java.util.ResourceBundle;
 
 public class DeviceSelectionController implements Initializable {
     @FXML
-    private final TextField keyMapName = new TextField();
+    private TextField keyMapName = new TextField();
     @FXML
     private Button uploadButton;
     @FXML

@@ -54,7 +54,7 @@ public class JsonHandler {
 
         try {
             JSONObject data = (JSONObject) JSONValue.parse(new String(Files.readAllBytes(KEYMAP_PATH.toPath())));
-            System.out.println(data);
+//            System.out.println(data);
 
             for (Object o : data.keySet()) {
                 String key = (String) o;
@@ -63,7 +63,7 @@ public class JsonHandler {
                 String[] splitKey = key.split(" ");
 
                 ArrayList<String> valueList = new ArrayList<>(List.of(value.split(" ")));
-                System.out.println(valueList);
+//                System.out.println(valueList);
 
                 ArrayList<Pair<Integer, Integer>> receivedCodeList = KeyPressHandler.convertStringToKeyCode(valueList);
 
@@ -72,7 +72,7 @@ public class JsonHandler {
                         int row = Integer.parseInt(splitKey[1]);
                         int col = Integer.parseInt(splitKey[2]);
                         int inputType = Integer.parseInt(splitKey[3]);
-                        System.out.println(receivedCodeList);
+//                        System.out.println(receivedCodeList);
                         MacroKey macroKey = new MacroKey(row, col);
                         if (main.keyMap.get(new Pair<>(row, col)) != null) {
                             macroKey = main.keyMap.get(new Pair<>(row, col));

@@ -101,9 +101,9 @@ public class KeyMapSelectionController implements Initializable {
         keyMapList.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<>() {
             @Override
             public void changed(ObservableValue<? extends Pair<String, String>> observableValue, Pair<String, String> pair, Pair<String, String> selectedValue) {
-                System.out.println(selectedValue);
+//                System.out.println(selectedValue);
                 GlobalData.getInstance().selectedKeyMap = selectedValue.getKey();
-                System.out.println(GlobalData.getInstance().selectedKeyMap);
+//                System.out.println(GlobalData.getInstance().selectedKeyMap);
             }
 
         });
