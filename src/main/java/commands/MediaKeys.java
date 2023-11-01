@@ -20,17 +20,16 @@ public class MediaKeys {
 
 
 	public static Runnable sortMediaKeys(Integer mediaKey) {
-		switch (mediaKey) {
-			case VOL_UP : return () -> volumeUp();
-			case VOL_DOWN:  return () -> volumeDown();
-			case PLAY:  return () -> songPlayPause();
-			case NEXT:  return () -> songNext();
-			case PREV: return () -> songPrevious();
-			case MUTE:  return () -> volumeMute();
-			case STOP : return () -> mediaStop();
-			default:
-				throw new RuntimeException("Invalid media key error");
-        }
+        return switch (mediaKey) {
+            case VOL_UP -> () -> volumeUp();
+            case VOL_DOWN -> () -> volumeDown();
+            case PLAY -> () -> songPlayPause();
+            case NEXT -> () -> songNext();
+            case PREV -> () -> songPrevious();
+            case MUTE -> () -> volumeMute();
+            case STOP -> () -> mediaStop();
+            default -> throw new RuntimeException("Invalid media key error");
+        };
 	}
 
 	//loads library from "MediaKeys.dll"

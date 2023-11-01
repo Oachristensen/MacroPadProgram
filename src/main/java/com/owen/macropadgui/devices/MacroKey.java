@@ -1,5 +1,7 @@
 package com.owen.macropadgui.devices;
 
+import com.owen.macropadgui.DeviceSelectionController;
+import com.owen.macropadgui.GlobalData;
 import commands.MediaKeys;
 import javafx.util.Pair;
 
@@ -8,15 +10,11 @@ import java.awt.*;
 import static java.awt.event.KeyEvent.*;
 
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
 
 public class MacroKey {
-    private int keyNum;
-    private int keyRow;
+    private final int keyRow;
+    private final int keyCol;
 
-    private ArrayList<String> releaseFunctionList;
-    private ArrayList<String> pressFunctionList;
     private ArrayList<Pair<Integer, Integer>>  keyPressCodeMap;
     private ArrayList<Pair<Integer, Integer>>  keyReleaseCodeMap;
 
@@ -29,21 +27,28 @@ public class MacroKey {
         Possible Column: 0, 1, 2, 3
     */
     public MacroKey(int key, int row) {
-        keyNum = key;
-        keyRow = row;
-        int type;
-        releaseFunctionList = new ArrayList<>();
-        pressFunctionList = new ArrayList<>();
+        keyRow = key;
+        keyCol = row;
         keyPressCodeMap = new ArrayList<>();
         keyReleaseCodeMap = new ArrayList<>();
 
     }
 
     public void onAction(int inputType) {
+        final DeviceSelectionController d = GlobalData.getInstance().deviceSelectionController;
+
         if (inputType == 1) {
+            if (d != null) {
+                GlobalData.getInstance().deviceSelectionController.setButtonToggle(keyRow, keyCol, true);
+            }
+
+
             onKeyPress();
         }
         if (inputType == 0) {
+            if (d != null) {
+                GlobalData.getInstance().deviceSelectionController.setButtonToggle(keyRow, keyCol, false);
+            }
             onKeyRelease();
         }
     }
@@ -51,7 +56,7 @@ public class MacroKey {
     public void onKeyPress() {
         try {
 
-            System.out.println("Key in row: " + keyRow + " with key Num: " + keyNum + " Pressed |   Function: " + keyPressCodeMap);
+            System.out.println("Key in col: " + keyCol + " with key col: " + keyRow + " Pressed |   Function: " + keyPressCodeMap);
             Robot robot = new Robot();
             for (Pair<Integer, Integer> p : keyPressCodeMap) {
                 if (p.getValue() != null) {
@@ -75,7 +80,7 @@ public class MacroKey {
 
     public void onKeyRelease() {
         try {
-            System.out.println("Key in row: " + keyRow + " with key Num: " + keyNum + " Released");
+            System.out.println("Key in row: " + keyCol + " with key Num: " + keyRow + " Released");
             Robot robot = new Robot();
             for (Pair<Integer, Integer> p :  keyReleaseCodeMap) {
                 if (p.getValue() != null) {
@@ -98,14 +103,12 @@ public class MacroKey {
     }
 
     public void setKeyPressFunction(ArrayList<String> list) {
-        pressFunctionList = list;
     }
     public void setKeyReleaseFunction(ArrayList<String> list) {
-        releaseFunctionList = list;
     }
 
-    public void setKeyPressCodeMap(ArrayList<Pair<Integer, Integer>>  recievedCodeMap) {
-        keyPressCodeMap = recievedCodeMap;
+    public void setKeyPressCodeMap(ArrayList<Pair<Integer, Integer>>  receivedCodeMap) {
+        keyPressCodeMap = receivedCodeMap;
     }
     public void setKeyReleaseCodeMap(ArrayList<Pair<Integer, Integer>>  recievedCodeMap) {
         keyReleaseCodeMap = recievedCodeMap;

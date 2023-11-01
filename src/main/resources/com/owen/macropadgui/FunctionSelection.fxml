@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import java.net.URL?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ToggleButton?>
@@ -7,7 +8,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="765.0" prefWidth="855.0" style="-fx-background-color: gray;" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.owen.macropadgui.FunctionSelectionController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="765.0" prefWidth="855.0" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.owen.macropadgui.FunctionSelectionController">
    <children>
       <Label alignment="CENTER" layoutX="2.0" layoutY="97.0" prefHeight="73.0" prefWidth="855.0" text="Select Key Function">
          <font>
@@ -60,4 +61,8 @@
          </font>
       </Label>
    </children>
+   <stylesheets>
+      <URL value="@colors.css" />
+      <URL value="@FunctionSelectionStyles.css" />
+   </stylesheets>
 </AnchorPane>

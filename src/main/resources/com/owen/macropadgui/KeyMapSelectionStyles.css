@@ -1,0 +1,22 @@
+@import url("colors.css");
+
+
+ * {
+    -fx-background-color: -fx-color-6;
+    -fx-text-fill: -fx-text-color;
+ }
+
+
+ .key-map-list > * {
+    -fx-font-size: 16
+ }
+
+ .list-cell:filled:selected:focused, .list-cell:filled:selected {
+     -fx-background-color: -fx-color-3;
+     -fx-text-fill: black;
+ }
+
+
+
+
+

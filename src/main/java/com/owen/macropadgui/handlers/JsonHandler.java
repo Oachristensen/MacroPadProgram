@@ -21,12 +21,14 @@ public class JsonHandler {
 
     public static final File STORAGE = new File(System.getProperty("user.dir") + "/storage/");
 
-    private ArrayList<String> valueList;
-
     public JsonHandler() {
 
     }
-    public static ArrayList<String> getValueList(String selectedKeyMap) {
+
+
+
+
+    public static ArrayList<String> getValueList() {
         ArrayList<String> valueList = new ArrayList<>();
         STORAGE.mkdir();
         File KEYMAP_PATH = new File(STORAGE, GlobalData.getInstance().selectedKeyMap + ".json");
@@ -36,10 +38,7 @@ public class JsonHandler {
             System.out.println(data);
 
             for (Object o : data.keySet()) {
-                String key = (String) o;
                 String value = (String) data.get(o);
-
-                String[] splitKey = key.split(" ");
 
                 valueList = new ArrayList<>(List.of(value.split(" ")));
             }
@@ -63,7 +62,7 @@ public class JsonHandler {
 
                 String[] splitKey = key.split(" ");
 
-                valueList = new ArrayList<>(List.of(value.split(" ")));
+                ArrayList<String> valueList = new ArrayList<>(List.of(value.split(" ")));
                 System.out.println(valueList);
 
                 ArrayList<Pair<Integer, Integer>> receivedCodeList = KeyPressHandler.convertStringToKeyCode(valueList);
@@ -86,9 +85,7 @@ public class JsonHandler {
                             macroKey.setKeyReleaseFunction(valueList);
                             macroKey.setKeyReleaseCodeMap(receivedCodeList);
                         }
-                        if (main.keyMap.get(new Pair<>(row, col)) == null) {
-                            main.keyMap.put(new Pair<>(row, col), macroKey);
-                        }
+                        main.keyMap.putIfAbsent(new Pair<>(row, col), macroKey);
 
 
                     }
@@ -107,9 +104,7 @@ public class JsonHandler {
                             macroButton.setButtonReleaseFunction(valueList);
                             macroButton.setButtonReleaseCodeMap(receivedCodeList);
                         }
-                        if (main.buttonMap.get(buttonNum) == null) {
-                            main.buttonMap.put(buttonNum, macroButton);
-                        }
+                        main.buttonMap.putIfAbsent(buttonNum, macroButton);
                     }
                     case "Knob" -> {
                         int knobNum = Integer.parseInt(splitKey[1]);
@@ -126,9 +121,7 @@ public class JsonHandler {
                             macroKnob.setKnobLeftFunction(valueList);
                             macroKnob.setKnobLeftCodeMap(receivedCodeList);
                         }
-                        if (main.knobMap.get(knobNum) == null) {
-                            main.knobMap.put(knobNum, macroKnob);
-                        }
+                        main.knobMap.putIfAbsent(knobNum, macroKnob);
 
                     }
                     default -> {
@@ -143,7 +136,7 @@ public class JsonHandler {
 
 
         } catch (Exception e) {
-            System.out.println(e);
+            e.printStackTrace();
         }
 
     }
@@ -153,7 +146,7 @@ public class JsonHandler {
         STORAGE.mkdir();
         File KEYMAP_PATH = new File(STORAGE,GlobalData.getInstance().selectedKeyMap + ".json");
         try {
-            JSONObject keyMapFile = (JSONObject) JSONValue.parse(new String(Files.readAllBytes(KEYMAP_PATH.toPath())));;
+            JSONObject keyMapFile = (JSONObject) JSONValue.parse(new String(Files.readAllBytes(KEYMAP_PATH.toPath())));
             keyMapFile.put(key, value);
             FileWriter file = new FileWriter(KEYMAP_PATH);
             file.write(keyMapFile.toJSONString());

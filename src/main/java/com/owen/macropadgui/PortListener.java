@@ -10,8 +10,6 @@ import jssc.SerialPortEvent;
 import jssc.SerialPortEventListener;
 import jssc.SerialPortException;
 
-import java.lang.reflect.Array;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -25,7 +23,7 @@ public class PortListener implements SerialPortEventListener {
     public JsonHandler jsonHandler = new JsonHandler();
 
 
-    public PortListener(SerialPort port, KeyMapSelectionController keyMapSelectionController){
+    public PortListener(SerialPort port){
         this.port = port;
         knobMap = new HashMap<>();
         buttonMap = new HashMap<>();
@@ -35,7 +33,7 @@ public class PortListener implements SerialPortEventListener {
     public PortListener(){
     }
 
-    public void setKeyData(KeyMapSelectionController keyMapSelectionController){
+    public void setKeyData(){
         jsonHandler.setKeyData(this);
     }
 
@@ -49,14 +47,14 @@ public class PortListener implements SerialPortEventListener {
 
             byte[] bytes = port.readBytes();
             String recievedString = new String(bytes).trim();
-            if (recievedString.equals("")) {
+            if (recievedString.isEmpty()) {
                 //Error correction
                 return;
             }
             char type = recievedString.charAt(0);
             int inputType = convertCharToInteger(recievedString.charAt(1));
 
-            if (type == 'K') {
+            if (type == 'K') { // key
                 int keyRow = convertCharToInteger(recievedString.charAt(2)); // 0 top row 1 bot row
                 int keyCol = convertCharToInteger(recievedString.charAt(3)); // 0-3 right to left
 
@@ -66,7 +64,7 @@ public class PortListener implements SerialPortEventListener {
                 keyMap.get(new Pair<>(keyRow, keyCol)).onAction(inputType);
 
 
-            } else if (type == 'N') {
+            } else if (type == 'N') { // knob
                 int knobNum = convertCharToInteger(recievedString.charAt(2));
                 if (knobMap.get(knobNum) == null) {
                     throw new NullPointerException("Knob not found in knobMap with num: " + knobNum);
@@ -76,7 +74,7 @@ public class PortListener implements SerialPortEventListener {
                 knobMap.get(knobNum).onAction(turnDirection);
 
 
-            } else if (type == 'B') {
+            } else if (type == 'B') { // button
                 int buttonNum = convertCharToInteger(recievedString.charAt(2));
                 if (buttonMap.get(buttonNum) == null) {
                     throw new NullPointerException("Button not found in buttonMap with num: " + buttonNum);
@@ -86,5 +84,9 @@ public class PortListener implements SerialPortEventListener {
         } catch (SerialPortException e) {
             throw new RuntimeException(e);
         }
+    }
+
+    public void setPortListener(DeviceSelectionController deviceSelectionController){
+        deviceSelectionController.setPortListener(this);
     }
 }

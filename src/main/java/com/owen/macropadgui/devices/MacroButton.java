@@ -1,16 +1,13 @@
 package com.owen.macropadgui.devices;
 
 
+import com.owen.macropadgui.GlobalData;
 import commands.MediaKeys;
 import javafx.util.Pair;
 
-import java.awt.*;
 
-
-import java.awt.event.KeyEvent;
+import java.awt.Robot;
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
 
 import static java.awt.event.KeyEvent.VK_SHIFT;
 
@@ -23,15 +20,12 @@ Button:
     Possible Matrix2 (NOT USED): -1
 */
 public class MacroButton {
-    public int buttonNum;
-    public int counter = 0;
-    private ArrayList<String> functionList;
+    public final int buttonNum;
     private ArrayList<Pair<Integer, Integer>>  buttonPressCodeMap;
     private ArrayList<Pair<Integer, Integer>>  buttonReleaseCodeMap;
 
     public MacroButton(int button) {
         buttonNum = button;
-        functionList = new ArrayList<>();
         buttonPressCodeMap = new ArrayList<>();
         buttonReleaseCodeMap = new ArrayList<>();
     }
@@ -45,6 +39,8 @@ public class MacroButton {
     }
 
     public void onKeyPress() {
+
+
         try {
             Robot robot = new Robot();
             for (Pair<Integer, Integer> p : buttonPressCodeMap) {
@@ -93,19 +89,17 @@ public class MacroButton {
     }
 
     public void setButtonPressFunction(ArrayList<String> list) {
-        this.functionList = list;
     }
 
     public void setButtonReleaseFunction(ArrayList<String> list) {
-        this.functionList = list;
     }
 
-    public void setButtonReleaseCodeMap(ArrayList<Pair<Integer, Integer>>  recievedCodeMap) {
-        buttonReleaseCodeMap = recievedCodeMap;
+    public void setButtonReleaseCodeMap(ArrayList<Pair<Integer, Integer>>  receivedCodeMap) {
+        buttonReleaseCodeMap = receivedCodeMap;
     }
 
-    public void setButtonPressCodeMap(ArrayList<Pair<Integer, Integer>> recievedCodeMap) {
-        buttonPressCodeMap = recievedCodeMap;
+    public void setButtonPressCodeMap(ArrayList<Pair<Integer, Integer>> receivedCodeMap) {
+        buttonPressCodeMap = receivedCodeMap;
     }
 }
 

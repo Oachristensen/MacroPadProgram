@@ -1,8 +1,5 @@
 package com.owen.macropadgui;
 
-import com.owen.macropadgui.DeviceSelectionController;
-import com.owen.macropadgui.GlobalData;
-import com.owen.macropadgui.PortListener;
 import com.owen.macropadgui.handlers.KeyMapNameJsonHandler;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
@@ -33,18 +30,9 @@ public class KeyMapSelectionController implements Initializable {
     @FXML
     private Button selectButton;
 
-    private Stage stage;
-    private Scene scene;
-    private Parent root;
-
     private static final SerialPort port = new SerialPort("COM3");
 
     private static PortListener portListener;
-
-    KeyMapNameJsonHandler keyMapNameJsonHandler;
-
-
-
 
 
     public void checkIfKeyMapSelected(ActionEvent event) {
@@ -63,14 +51,15 @@ public class KeyMapSelectionController implements Initializable {
     public void switchToDeviceSelection(ActionEvent event) {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("DeviceSelection.fxml"));
-            root = loader.load();
+            Parent root = loader.load();
 
             DeviceSelectionController deviceSelectionController = loader.getController();
             String name = keyMapList.getSelectionModel().getSelectedItem().getValue();
+            System.out.println(name);
             deviceSelectionController.setKeyMapName(name);
 
-            stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-            scene = new Scene(root);
+            Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+            Scene scene = new Scene(root);
             stage.setScene(scene);
             stage.show();
             if (!port.isOpened()) {
@@ -79,9 +68,10 @@ public class KeyMapSelectionController implements Initializable {
                 // port.setParams(9600, 8, 1, 0); // alternate technique
                 int mask = SerialPort.MASK_RXCHAR + SerialPort.MASK_CTS + SerialPort.MASK_DSR;
                 port.setEventsMask(mask);
-                port.addEventListener(portListener = new PortListener(port, this));
+                port.addEventListener(portListener = new PortListener(port));
             }
-            portListener.setKeyData(this);
+            portListener.setKeyData();
+            portListener.setPortListener(deviceSelectionController);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -89,7 +79,7 @@ public class KeyMapSelectionController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        keyMapList.setCellFactory(param -> new ListCell<Pair<String, String>>() {
+        keyMapList.setCellFactory(param -> new ListCell<>() {
             @Override
             protected void updateItem(Pair<String, String> pair, boolean empty) {
                 super.updateItem(pair, empty);
@@ -100,7 +90,7 @@ public class KeyMapSelectionController implements Initializable {
                 }
             }
         });
-        keyMapList.getChildrenUnmodifiable().addListener(new ListChangeListener<Node>() {
+        keyMapList.getChildrenUnmodifiable().addListener(new ListChangeListener<>() {
             @Override
             public void onChanged(Change<? extends Node> change) {
             }
@@ -117,5 +107,7 @@ public class KeyMapSelectionController implements Initializable {
             }
 
         });
+        keyMapList.getSelectionModel().select(0);
+
     }
 }

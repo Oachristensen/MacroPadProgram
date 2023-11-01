@@ -1,0 +1,15 @@
+@import url("colors.css");
+
+
+ * {
+    -fx-background-color: -fx-color-6;
+    -fx-text-fill: -fx-text-color;
+ }
+
+
+ .tree-cell > .tree-disclosure-node > .arrow  {
+     -fx-background-color: -fx-color-1;
+ }
+ .tree-cell:expanded > .tree-disclosure-node > .arrow {
+     -fx-background-color: -fx-color-3;
+ }

@@ -5,10 +5,7 @@ import javafx.util.Pair;
 
 import java.awt.*;
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
 
-import static java.awt.event.KeyEvent.VK_RIGHT_PARENTHESIS;
 import static java.awt.event.KeyEvent.VK_SHIFT;
 
 /*
@@ -19,8 +16,7 @@ Knob:
     Possible Matrix2 (NOT USED): -1
 */
 public class MacroKnob {
-    private int knobNum;
-    private int counter = 100;
+    private final int knobNum;
 
     private ArrayList<String> functionList;
     private ArrayList<Pair<Integer, Integer>>  knobLeftCodeMap;
@@ -36,14 +32,14 @@ public class MacroKnob {
 
     public void onAction(int direction) {
         if (direction == 0) {
-            counter++;
+
             onKnobRight();
         } else {
-            counter++;
+
             onKnobLeft();
         }
 
-        System.out.println("Knob Turned: " + knobNum + "    |   Knob Counter: " + counter + "   |   Function: " + functionList);
+        System.out.println("Knob Turned: " + knobNum + "   |   Function: " + functionList);
     }
 
     public void onKnobLeft() {
@@ -100,12 +96,12 @@ public class MacroKnob {
         this.functionList = list;
     }
 
-    public void setKnobLeftCodeMap(ArrayList<Pair<Integer, Integer>>  recievedCodeMap) {
-        knobLeftCodeMap = recievedCodeMap;
+    public void setKnobLeftCodeMap(ArrayList<Pair<Integer, Integer>>  receivedCodeMap) {
+        knobLeftCodeMap = receivedCodeMap;
     }
 
-    public void setKnobRightCodeMap(ArrayList<Pair<Integer, Integer>>  recievedCodeMap) {
-        knobRightCodeMap = recievedCodeMap;
+    public void setKnobRightCodeMap(ArrayList<Pair<Integer, Integer>>  receivedCodeMap) {
+        knobRightCodeMap = receivedCodeMap;
     }
 }
 

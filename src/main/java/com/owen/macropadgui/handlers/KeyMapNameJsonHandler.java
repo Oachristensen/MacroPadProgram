@@ -12,7 +12,6 @@ import java.nio.file.Files;
 
 
 import java.util.ArrayList;
-import java.util.Collections;
 
 
 public class KeyMapNameJsonHandler {
@@ -21,7 +20,7 @@ public class KeyMapNameJsonHandler {
     public static final File STORAGE = new File(System.getProperty("user.dir") + "/storage/");
     public static final File KEYMAP_PATH = new File(STORAGE, "KeyMapList.json");
 
-    private ArrayList<Pair<String, String>> list = new ArrayList<>();
+    private final ArrayList<Pair<String, String>> list = new ArrayList<>();
 
 
     public KeyMapNameJsonHandler(KeyMapSelectionController keyMapSelectionController) {
@@ -36,7 +35,7 @@ public class KeyMapNameJsonHandler {
 
             }
         } catch (Exception e) {
-            System.out.println(e);
+            e.printStackTrace();
         }
     }
     public ArrayList<Pair<String, String>> getList(){
@@ -48,7 +47,7 @@ public class KeyMapNameJsonHandler {
         STORAGE.mkdir();
         File KEYMAP_PATH = new File(STORAGE, "KeyMapList.json");
         try {
-            JSONObject keyNameFile = (JSONObject) JSONValue.parse(new String(Files.readAllBytes(KEYMAP_PATH.toPath())));;
+            JSONObject keyNameFile = (JSONObject) JSONValue.parse(new String(Files.readAllBytes(KEYMAP_PATH.toPath())));
             keyNameFile.put(GlobalData.getInstance().selectedKeyMap, name);
             FileWriter file = new FileWriter(KEYMAP_PATH);
             file.write(keyNameFile.toJSONString());

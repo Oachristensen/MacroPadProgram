@@ -1,0 +1,11 @@
+@import url("colors.css");
+
+
+ * {
+    -fx-background-color: -fx-color-6;
+    -fx-text-fill: -fx-text-color;
+ }
+
+
+
+

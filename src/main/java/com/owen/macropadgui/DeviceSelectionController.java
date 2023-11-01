@@ -1,27 +1,28 @@
 package com.owen.macropadgui;
 
-import com.owen.macropadgui.GlobalData;
+import com.owen.macropadgui.handlers.JsonHandler;
 import com.owen.macropadgui.handlers.KeyMapNameJsonHandler;
 import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.*;
+import javafx.scene.control.Button;
+import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.shape.*;
+import javafx.scene.shape.Circle;
+import javafx.scene.shape.Rectangle;
 import javafx.stage.Stage;
-import org.controlsfx.control.action.Action;
-import org.json.simple.JSONObject;
 
-import java.util.ArrayList;
+import java.net.URL;
+import java.util.ResourceBundle;
 
 
-public class DeviceSelectionController {
+public class DeviceSelectionController implements Initializable {
     @FXML
-    private TextField keyMapName = new TextField();
+    private final TextField keyMapName = new TextField();
     @FXML
     private Button uploadButton;
     @FXML
@@ -44,6 +45,8 @@ public class DeviceSelectionController {
     @FXML
     private Rectangle key8;
 
+    private Rectangle[][] rectangleList;
+
     @FXML
     private Circle button1;
     @FXML
@@ -58,18 +61,14 @@ public class DeviceSelectionController {
     @FXML
     private Button knob3;
 
-    private Stage stage;
-    private Scene scene;
-    private Parent root;
-
-    private int keyMapChoice;
+    private PortListener portListener;
 
 
     public void switchToKeymapSelection(ActionEvent event) {
         try {
             Parent root = FXMLLoader.load(getClass().getResource("KeyMapSelection.fxml"));
-            stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-            scene = new Scene(root);
+            Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+            Scene scene = new Scene(root);
             stage.setScene(scene);
             stage.show();
         } catch (Exception e) {
@@ -79,6 +78,9 @@ public class DeviceSelectionController {
 
     public void setKeyMapName(String name) {
         keyMapName.setText(name);
+    }
+    public void setPortListener(PortListener activePortListener){
+        portListener = activePortListener;
     }
 
     public void switchToFunctionSelection(MouseEvent event) {
@@ -96,9 +98,28 @@ public class DeviceSelectionController {
 
     }
 
-    public void uploadNameData(ActionEvent event) {
+    public void uploadData(ActionEvent event) {
         String name = keyMapName.getText();
         KeyMapNameJsonHandler.uploadKeyMapNames(name);
+        portListener.setKeyData();
+    }
+
+
+    @Override
+    public void initialize(URL url, ResourceBundle resourceBundle) {
+        GlobalData.getInstance().deviceSelectionController = this;
+        rectangleList = new Rectangle[][]{new Rectangle[]{key1, key2, key3, key4}, new Rectangle[]{key5, key6, key7, key8}};
+    }
+
+
+    public void setButtonToggle(final int keyRow, final int keyCol, final boolean isPressed) {
+        if (isPressed) {
+            rectangleList[keyRow][keyCol].setStyle("-fx-fill: red;");
+        } else {
+            rectangleList[keyRow][keyCol].setStyle("-fx-fill: white;");
+        }
+
+
 
     }
 }

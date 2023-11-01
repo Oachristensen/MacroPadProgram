@@ -13,7 +13,6 @@ import javafx.stage.Stage;
 
 import java.net.URL;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.ResourceBundle;
 
@@ -50,15 +49,13 @@ public class FunctionSelectionController implements Initializable {
     @FXML
     private ToggleButton pressReleaseToggleButton;
 
-    private Stage stage;
-
     private String[] releaseArray = {null, null, null, null, null};
     private String[] pressArray = {null, null, null, null, null};
 
     private HashMap<Integer, Label> keyLabelList;
     private HashMap<Integer, TreeView<String>> functionTreeViewList;
 
-    ArrayList<String> valueList = JsonHandler.getValueList(GlobalData.getInstance().selectedKeyMap);
+    private final ArrayList<String> valueList = JsonHandler.getValueList();
 
 
     private String[] populateArray(String[] newArray) {
@@ -77,30 +74,30 @@ public class FunctionSelectionController implements Initializable {
 
     private void populateTreeView() {
         ArrayList<TreeItem<String>> treeRoots = new ArrayList<>();
-        TreeItem<String> topRoot = new TreeItem<String>("Special Keys");
+        TreeItem<String> topRoot = new TreeItem<>("Special Keys");
         topRoot.setExpanded(true);
-        TreeItem<String> rootFKeys = new TreeItem<String>("F Keys");
+        TreeItem<String> rootFKeys = new TreeItem<>("F Keys");
         rootFKeys.setExpanded(false);
         for (int i = 1; i < 13; i++) {
             TreeItem<String> fnKey = new TreeItem<>("F" + i);
             rootFKeys.getChildren().add(fnKey);
         }
         treeRoots.add(rootFKeys);
-        TreeItem<String> rootSpecialKeys = new TreeItem<String>("Function Keys");
+        TreeItem<String> rootSpecialKeys = new TreeItem<>("Function Keys");
         rootFKeys.setExpanded(false);
         rootSpecialKeys.getChildren().addAll(
-                new TreeItem<String>("Space"),
-                new TreeItem<String>("Enter"),
-                new TreeItem<String>("Backspace"),
-                new TreeItem<String>("Tab"),
-                new TreeItem<String>("Alt"),
-                new TreeItem<String>("Ctrl"),
-                new TreeItem<String>("Windows"),
-                new TreeItem<String>("Esc"),
-                new TreeItem<String>("Caps")
+                new TreeItem<>("Space"),
+                new TreeItem<>("Enter"),
+                new TreeItem<>("Backspace"),
+                new TreeItem<>("Tab"),
+                new TreeItem<>("Alt"),
+                new TreeItem<>("Ctrl"),
+                new TreeItem<>("Windows"),
+                new TreeItem<>("Esc"),
+                new TreeItem<>("Caps")
         );
         treeRoots.add(rootSpecialKeys);
-        TreeItem<String> rootArrowKeys = new TreeItem<String>("Arrow Keys");
+        TreeItem<String> rootArrowKeys = new TreeItem<>("Arrow Keys");
         rootArrowKeys.getChildren().addAll(
                 new TreeItem<>("Up"),
                 new TreeItem<>("Down"),
@@ -190,7 +187,7 @@ public class FunctionSelectionController implements Initializable {
     }
 
     public void exitFunctionSelection(ActionEvent event) {
-        stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
         stage.close();
     }
 
@@ -308,6 +305,16 @@ public class FunctionSelectionController implements Initializable {
         keyLabelList.put(3, keyInput4);
         keyLabelList.put(4, keyInput5);
 
+
+        for (int i = 0; i < keyLabelList.size(); i++) {
+            try {
+
+                keyLabelList.get(i).setText(valueList.get(i));
+            } catch (Exception ignored) {
+            }
+        }
+
+
         functionTreeViewList.put(0, functionList1);
         functionTreeViewList.put(1, functionList2);
         functionTreeViewList.put(2, functionList3);
@@ -361,7 +368,7 @@ public class FunctionSelectionController implements Initializable {
             }
         });
 
-        pressReleaseToggleButton.selectedProperty().addListener(new ChangeListener<Boolean>() {
+        pressReleaseToggleButton.selectedProperty().addListener(new ChangeListener<>() {
             @Override
             public void changed(ObservableValue<? extends Boolean> observableValue, Boolean aBoolean, Boolean isSelected) {
                 if (GlobalData.getInstance().selectedItemID.toCharArray()[1] == 'n') {
