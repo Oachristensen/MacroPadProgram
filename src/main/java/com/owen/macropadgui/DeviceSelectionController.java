@@ -2,7 +2,9 @@ package com.owen.macropadgui;
 
 import com.owen.macropadgui.handlers.JsonHandler;
 import com.owen.macropadgui.handlers.KeyMapNameJsonHandler;
+import javafx.application.Platform;
 import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -15,6 +17,7 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.shape.Circle;
 import javafx.scene.shape.Rectangle;
 import javafx.stage.Stage;
+import javafx.stage.WindowEvent;
 
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -70,7 +73,15 @@ public class DeviceSelectionController implements Initializable {
             Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
             Scene scene = new Scene(root);
             stage.setScene(scene);
+            stage.setOnCloseRequest(new EventHandler<WindowEvent>() {
+                @Override
+                public void handle(WindowEvent t) {
+                    Platform.exit();
+                    System.exit(0);
+                }
+            });
             stage.show();
+
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -122,5 +133,6 @@ public class DeviceSelectionController implements Initializable {
 
 
     }
+
 }
 
