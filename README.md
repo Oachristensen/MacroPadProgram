@@ -3,7 +3,7 @@
 
   ### How to use
     Once built, you can upload the firmware using the code found in Arduino Files, you will need Arduino IDE
-    From there, you can customize and change macros by selecting each individual key from a dropdown shown "Here"
+    From there, you can customize and change macros by selecting each individual key from a dropdown.
 
   ### TODO
     1.0
